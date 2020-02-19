@@ -1,2 +1,2 @@
-# Meetup-mkt
-A Meetup app for mkt equipment in-house
+# meetup-mkt
+A meetup app for mkt equipment in-house
