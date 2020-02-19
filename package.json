@@ -31,6 +31,11 @@
   "dependencies": {
     "config": "^3.2.5",
     "dotenv": "^8.2.0",
-    "joi": "^14.3.1"
+    "fastify": "^2.12.0",
+    "fastify-chalk": "^0.1.2",
+    "fastify-graceful-shutdown": "^2.0.1",
+    "fastify-jwt": "^1.2.1",
+    "joi": "^14.3.1",
+    "pino-pretty": "^3.6.0"
   }
 }

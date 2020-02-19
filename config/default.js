@@ -36,5 +36,10 @@ module.exports = {
   jwtSecret: value.JWT_SECRET,
 
   // database url
-  databaseUrl: value.DATABASE_URL
+  databaseUrl: value.DATABASE_URL,
+
+  // logger
+  logger: {
+    redact: ['req.headers.authorization']
+  }
 }
