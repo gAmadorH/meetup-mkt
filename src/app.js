@@ -18,6 +18,7 @@ app.register(require('fastify-jwt'), {
 
 app.register(require('./sequelize'), { database })
 app.register(require('./models-loader'))
+app.register(require('./routes'), { prefix: '/api' })
 
 app.after((err) => {
   app.log.info('NODE_ENV\t\t[%s]', app.chalk.magenta(environment))
