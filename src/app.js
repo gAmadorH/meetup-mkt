@@ -1,7 +1,12 @@
 const config = require('config')
 const fastify = require('fastify')
 
-const { environment, jwtSecret, logger } = config
+const {
+  environment,
+  jwtSecret,
+  logger,
+  database
+} = config
 
 const app = fastify({ logger })
 
@@ -10,6 +15,8 @@ app.register(require('fastify-graceful-shutdown'))
 app.register(require('fastify-jwt'), {
   secret: jwtSecret
 })
+
+app.register(require('./sequelize'), { database })
 
 app.after((err) => {
   app.log.info('NODE_ENV\t\t[%s]', app.chalk.magenta(environment))

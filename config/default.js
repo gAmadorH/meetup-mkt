@@ -35,8 +35,14 @@ module.exports = {
   // jwt secret
   jwtSecret: value.JWT_SECRET,
 
-  // database url
-  databaseUrl: value.DATABASE_URL,
+  // database config
+  database: {
+    url: value.DATABASE_URL,
+    config: {
+      logging: true,
+      dialect: value.DATABASE_DIALECT
+    }
+  },
 
   // logger
   logger: {
