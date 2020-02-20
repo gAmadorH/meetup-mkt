@@ -9,7 +9,12 @@ const validationSchema = Joi.object({
   HOST: Joi.string().ip().required(),
   PORT: Joi.number().port().required(),
   JWT_SECRET: Joi.string().token().required(),
-  DATABASE_URL: Joi.string().uri().required()
+  DATABASE_NAME: Joi.string().required(),
+  DATABASE_USER: Joi.string().required(),
+  DATABASE_PASSWAORD: Joi.string().required(),
+  DATABASE_HOST: Joi.string().ip().required(),
+  DATABASE_PORT: Joi.number().port().required(),
+  DATABASE_DIALECT: Joi.string().required()
 })
 
 const validationOptions = {
@@ -37,10 +42,14 @@ module.exports = {
 
   // database config
   database: {
-    url: value.DATABASE_URL,
-    config: {
-      logging: true,
-      dialect: value.DATABASE_DIALECT
+    db: value.DATABASE_NAME,
+    username: value.DATABASE_USER,
+    password: value.DATABASE_PASSWAORD,
+    options: {
+      host: value.DATABASE_HOST,
+      port: value.DATABASE_PORT,
+      dialect: value.DATABASE_DIALECT,
+      logging: null
     }
   },
 

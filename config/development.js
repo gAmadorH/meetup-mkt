@@ -1,4 +1,11 @@
 module.exports = {
+  // database config
+  database: {
+    options: {
+      logging: true
+    }
+  },
+
   // logger
   logger: {
     level: 'debug',
