@@ -6,11 +6,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER="${TAG}"
-      - POSTGRES_PASSWORD="${TAG}"
-      - POSTGRES_DB="${TAG}"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - POSTGRES_DB="${DATABASE_NAME}"
+      - POSTGRES_USER="${DATABASE_USER}"
+      - POSTGRES_PASSWORD="${DATABASE_PASSWAORD}"
   meetup:
     build: .
     depends_on:
