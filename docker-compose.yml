@@ -1,0 +1,17 @@
+version: '3'
+services:
+  meetupdb:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER="${TAG}"
+      - POSTGRES_PASSWORD="${TAG}"
+      - POSTGRES_DB="${TAG}"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  meetup:
+    build: .
+    depends_on:
+      -  meetupdb
