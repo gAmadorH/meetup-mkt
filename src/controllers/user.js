@@ -32,10 +32,15 @@ function getAll(request, reply) {
 
 // get one
 function getOne(request, reply) {
-  const { User } = this.sequelize.models
+  const { User, Meeting } = this.sequelize.models
   const { id } = request.params
 
-  User.findByPk(id).then((user) => {
+  User.findByPk(id, {
+    include: {
+      model: Meeting,
+      through: { attributes: [] }
+    }
+  }).then((user) => {
     reply.send({ user })
   })
 }
