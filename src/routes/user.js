@@ -22,6 +22,11 @@ module.exports = (app, _options, next) => {
     schema: sch.updateOne
   }, ctl.updateOne)
 
+  // enroll one in an event
+  app.put('/:id/meeting', {
+    schema: sch.enrollOne
+  }, ctl.enrollOne)
+
   // delete one
   app.delete('/:id', {
     schema: sch.deleteOne

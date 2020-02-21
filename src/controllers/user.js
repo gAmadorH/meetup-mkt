@@ -53,6 +53,27 @@ function updateOne(request, reply) {
     })
 }
 
+// enroll one in an event
+function enrollOne(request, reply) {
+  const { User, Meeting } = this.sequelize.models
+  const { id } = request.params
+  const { meetingIds } = request.body
+
+  User.findByPk(id)
+    .then((user) => user.addMeetings(meetingIds))
+    .then(() => {
+      User.findByPk(id, {
+        include: {
+          model: Meeting,
+          through: { attributes: [] }
+        }
+      })
+    })
+    .then((user) => {
+      reply.send({ user })
+    })
+}
+
 // delete one
 function deleteOne(request, reply) {
   const { User } = this.sequelize.models
@@ -68,5 +89,6 @@ module.exports = {
   getAll,
   getOne,
   updateOne,
+  enrollOne,
   deleteOne
 }
