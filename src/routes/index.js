@@ -1,4 +1,5 @@
 const meetingRoutes = require('./meeting')
+const userRoutes = require('./user')
 
 module.exports = (app, _options, next) => {
   app.get('/health-check', (_request, reply) => {
@@ -6,6 +7,7 @@ module.exports = (app, _options, next) => {
   })
 
   app.register(meetingRoutes, { prefix: '/meetings' })
+  app.register(userRoutes, { prefix: '/users' })
 
   next()
 }
