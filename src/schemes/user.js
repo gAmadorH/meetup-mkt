@@ -105,6 +105,33 @@ const enrollOne = {
   }
 }
 
+// unenroll one in an event
+const unenrollOne = {
+  params: {
+    type: 'object',
+    properties: {
+      id: {
+        type: 'integer'
+      }
+    }
+  },
+  body: {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      meetingIds: {
+        type: 'array',
+        minItems: 1,
+        uniqueItems: true,
+        items: {
+          type: 'integer',
+          minimum: 1
+        }
+      }
+    }
+  }
+}
+
 // delete one
 const deleteOne = {
   params: {
@@ -123,5 +150,6 @@ module.exports = {
   getOne,
   updateOne,
   enrollOne,
+  unenrollOne,
   deleteOne
 }

@@ -27,6 +27,11 @@ module.exports = (app, _options, next) => {
     schema: sch.enrollOne
   }, ctl.enrollOne)
 
+  // unenroll one in an event
+  app.delete('/:id/meeting', {
+    schema: sch.unenrollOne
+  }, ctl.unenrollOne)
+
   // delete one
   app.delete('/:id', {
     schema: sch.deleteOne

@@ -66,14 +66,31 @@ function enrollOne(request, reply) {
 
   User.findByPk(id)
     .then((user) => user.addMeetings(meetingIds))
-    .then(() => {
-      User.findByPk(id, {
-        include: {
-          model: Meeting,
-          through: { attributes: [] }
-        }
-      })
+    .then(() => User.findByPk(id, {
+      include: {
+        model: Meeting,
+        through: { attributes: [] }
+      }
+    }))
+    .then((user) => {
+      reply.send({ user })
     })
+}
+
+// unenroll one in an event
+function unenrollOne(request, reply) {
+  const { User, Meeting } = this.sequelize.models
+  const { id } = request.params
+  const { meetingIds } = request.body
+
+  User.findByPk(id)
+    .then((user) => user.removeMeetings(meetingIds))
+    .then(() => User.findByPk(id, {
+      include: {
+        model: Meeting,
+        through: { attributes: [] }
+      }
+    }))
     .then((user) => {
       reply.send({ user })
     })
@@ -95,5 +112,6 @@ module.exports = {
   getOne,
   updateOne,
   enrollOne,
+  unenrollOne,
   deleteOne
 }
