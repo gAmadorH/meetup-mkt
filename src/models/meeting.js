@@ -14,5 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   })
 
+  Meeting.associate = (models) => {
+    Meeting.belongsToMany(models.User, { through: models.MeetingUsers })
+  }
+
   return Meeting
 }
