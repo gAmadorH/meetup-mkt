@@ -12,6 +12,7 @@ const app = fastify({ logger })
 
 app.register(require('fastify-chalk'))
 app.register(require('fastify-graceful-shutdown'))
+app.register(require('fastify-sensible'))
 app.register(require('fastify-jwt'), {
   secret: jwtSecret
 })
