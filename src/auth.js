@@ -5,10 +5,10 @@ function fastifyAuth(fastify, _options, done) {
     request.jwtVerify((err, decoded) => {
       if (err) {
         next(this.httpErrors.unauthorized(err.message))
+      } else {
+        request.user = decoded.user
+        next()
       }
-
-      request.user = decoded.user
-      next()
     })
   })
 
