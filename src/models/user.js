@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
@@ -6,17 +8,41 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER
     },
-    name: {
+    firstName: {
       allowNull: false,
       type: DataTypes.STRING(50)
+    },
+    lastName: {
+      allowNull: false,
+      type: DataTypes.STRING(50)
+    },
+    username: {
+      allowNull: false,
+      type: DataTypes.STRING(50)
+    },
+    email: {
+      allowNull: false,
+      type: DataTypes.STRING(50)
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING(100)
     }
   }, {
-    paranoid: true
+    paranoid: true,
+    setterMethods: {
+      password: (val) => {
+        const password = bcrypt.hashSync(val, bcrypt.genSaltSync(8))
+        this.setDataValue('password', password)
+      }
+    }
   })
 
   User.associate = (models) => {
     User.belongsToMany(models.Meeting, { through: models.MeetingUsers })
   }
+
+  User.prototype.validatePassword = (password) => { bcrypt.compareSync(password, this.password) }
 
   return User
 }
