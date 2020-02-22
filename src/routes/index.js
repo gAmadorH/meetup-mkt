@@ -1,3 +1,4 @@
+const authRoutes = require('./auth')
 const meetingRoutes = require('./meeting')
 const userRoutes = require('./user')
 
@@ -6,6 +7,7 @@ module.exports = (app, _options, next) => {
     reply.send({ status: 'OK' })
   })
 
+  app.register(authRoutes, { prefix: '/auth' })
   app.register(meetingRoutes, { prefix: '/meetings' })
   app.register(userRoutes, { prefix: '/users' })
 
