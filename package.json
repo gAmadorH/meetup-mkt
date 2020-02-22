@@ -7,7 +7,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint": "eslint src/*",
-    "db:sync": "node utils/sync-db.js"
+    "db:sync": "node utils/sync-db.js",
+    "db:seed:user": "node utils/user-mocks.js"
   },
   "repository": {
     "type": "git",
