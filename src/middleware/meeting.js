@@ -17,7 +17,7 @@ function isThereAMeeting(request, reply, done) {
 function authorization(request, _reply, done) {
   const { meeting, user } = request
 
-  if (meeting.hostId === user.id) {
+  if (user.isAdmin || (meeting.hostId === user.id)) {
     done()
   } else {
     done(this.httpErrors.forbidden())

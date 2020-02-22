@@ -12,7 +12,7 @@ function login(request, reply) {
       return reply.unauthorized()
     }
 
-    const jwtPayload = { user: { id: user.id } }
+    const jwtPayload = { user: { id: user.id, isAdmin: user.isAdmin } }
     const jwtOptions = { expiresIn: '20m' }
     const token = sign(jwtPayload, jwtOptions)
 
