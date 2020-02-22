@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     paranoid: true,
     setterMethods: {
-      password: (val) => {
+      password(val) {
         const password = bcrypt.hashSync(val, bcrypt.genSaltSync(8))
         this.setDataValue('password', password)
       }
