@@ -2,8 +2,9 @@
 function addOne(request, reply) {
   const { Meeting } = this.sequelize.models
   const { name } = request.body
+  const { user } = request
 
-  Meeting.create({ name }).then((meeting) => {
+  Meeting.create({ name, hostId: user.id }).then((meeting) => {
     reply.send({ meeting })
   })
 }
@@ -19,7 +20,7 @@ function getAll(request, reply) {
   } = request.query
 
   Meeting.findAndCountAll({
-    attributes: ['id', 'name'],
+    attributes: { exclude: ['deletedAt'] },
     limit,
     offset: (step - 1) * limit,
     order: [[orderBy, order]]
@@ -35,7 +36,9 @@ function getOne(request, reply) {
   const { Meeting } = this.sequelize.models
   const { id } = request.params
 
-  Meeting.findByPk(id).then((meeting) => {
+  Meeting.findByPk(id, {
+    attributes: { exclude: ['deletedAt'] }
+  }).then((meeting) => {
     reply.send({ meeting })
   })
 }
@@ -47,7 +50,7 @@ function updateOne(request, reply) {
   const { name } = request.body
 
   Meeting.update({ name }, { where: { id } })
-    .then(() => Meeting.findByPk(id))
+    .then(() => Meeting.findByPk(id, { attributes: { exclude: ['deletedAt'] } }))
     .then((meeting) => {
       reply.send({ meeting })
     })
