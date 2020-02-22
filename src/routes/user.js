@@ -1,5 +1,6 @@
 const ctl = require('../controllers/user')
 const sch = require('../schemes/user')
+const middle = require('../middleware/meeting')
 
 module.exports = (app, _options, next) => {
   // add one
@@ -9,32 +10,57 @@ module.exports = (app, _options, next) => {
 
   // get all
   app.get('/', {
+    preValidation: app.auth,
     schema: sch.getAll
   }, ctl.getAll)
 
   // get one
   app.get('/:id', {
-    schema: sch.getOne
+    preValidation: app.auth,
+    schema: sch.getOne,
+    preHandler: [
+      middle.isThereUser
+    ]
   }, ctl.getOne)
 
   // update one
   app.put('/:id', {
-    schema: sch.updateOne
+    preValidation: app.auth,
+    schema: sch.updateOne,
+    preHandler: [
+      middle.isThereUser,
+      middle.authorization
+    ]
   }, ctl.updateOne)
 
   // enroll one in an event
   app.put('/:id/meeting', {
-    schema: sch.enrollOne
+    preValidation: app.auth,
+    schema: sch.enrollOne,
+    preHandler: [
+      middle.isThereUser,
+      middle.authorization
+    ]
   }, ctl.enrollOne)
 
   // unenroll one in an event
   app.delete('/:id/meeting', {
-    schema: sch.unenrollOne
+    preValidation: app.auth,
+    schema: sch.unenrollOne,
+    preHandler: [
+      middle.isThereUser,
+      middle.authorization
+    ]
   }, ctl.unenrollOne)
 
   // delete one
   app.delete('/:id', {
-    schema: sch.deleteOne
+    preValidation: app.auth,
+    schema: sch.deleteOne,
+    preHandler: [
+      middle.isThereUser,
+      middle.authorization
+    ]
   }, ctl.deleteOne)
 
   next()
