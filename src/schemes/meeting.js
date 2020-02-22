@@ -3,12 +3,21 @@ const addOne = {
   body: {
     type: 'object',
     additionalProperties: false,
-    required: ['name'],
+    required: ['name', 'description', 'address', 'date'],
     properties: {
       name: {
         type: 'string',
         minLength: 10,
         maxLength: 50
+      },
+      description: {
+        type: 'string'
+      },
+      address: {
+        type: 'string'
+      },
+      date: {
+        type: 'string'
       }
     }
   }
@@ -32,7 +41,7 @@ const getAll = {
         minimum: 1
       },
       orderBy: {
-        enum: ['id', 'name'],
+        enum: ['id', 'name', 'description', 'address', 'date'],
         default: 'id'
       },
       order: {
@@ -73,6 +82,15 @@ const updateOne = {
         type: 'string',
         minLength: 10,
         maxLength: 50
+      },
+      description: {
+        type: 'string'
+      },
+      address: {
+        type: 'string'
+      },
+      date: {
+        type: 'string'
       }
     }
   }

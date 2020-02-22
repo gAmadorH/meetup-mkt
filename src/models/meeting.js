@@ -9,6 +9,18 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       allowNull: false,
       type: DataTypes.STRING(50)
+    },
+    description: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    address: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    date: {
+      allowNull: false,
+      type: DataTypes.DATE
     }
   }, {
     paranoid: true

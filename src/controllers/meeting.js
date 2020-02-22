@@ -1,10 +1,21 @@
 // add one
 function addOne(request, reply) {
   const { Meeting } = this.sequelize.models
-  const { name } = request.body
+  const {
+    name,
+    description,
+    address,
+    date
+  } = request.body
   const { user } = request.auth
 
-  Meeting.create({ name, hostId: user.id }).then((meeting) => {
+  Meeting.create({
+    name,
+    description,
+    address,
+    date,
+    hostId: user.id
+  }).then((meeting) => {
     reply.send({ meeting })
   })
 }
@@ -47,9 +58,21 @@ function getOne(request, reply) {
 function updateOne(request, reply) {
   const { Meeting } = this.sequelize.models
   const { id } = request.params
-  const { name } = request.body
+  const {
+    name,
+    description,
+    address,
+    date
+  } = request.body
 
-  Meeting.update({ name }, { where: { id } })
+  Meeting.update({
+    name,
+    description,
+    address,
+    date
+  }, {
+    where: { id }
+  })
     .then(() => Meeting.findByPk(id, { attributes: { exclude: ['deletedAt'] } }))
     .then((meeting) => {
       reply.send({ meeting })
