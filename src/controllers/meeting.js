@@ -2,7 +2,7 @@
 function addOne(request, reply) {
   const { Meeting } = this.sequelize.models
   const { name } = request.body
-  const { user } = request
+  const { user } = request.auth
 
   Meeting.create({ name, hostId: user.id }).then((meeting) => {
     reply.send({ meeting })

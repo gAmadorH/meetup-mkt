@@ -6,7 +6,7 @@ function fastifyAuth(fastify, _options, done) {
       if (err) {
         next(this.httpErrors.unauthorized(err.message))
       } else {
-        request.user = decoded.user
+        request.auth.user = decoded.user
         next()
       }
     })
