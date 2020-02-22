@@ -1,9 +1,21 @@
 // add one
 function addOne(request, reply) {
   const { User } = this.sequelize.models
-  const { name } = request.body
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password
+  } = request.body
 
-  User.create({ name }).then((user) => {
+  User.create({
+    firstName,
+    lastName,
+    username,
+    email,
+    password
+  }).then((user) => {
     reply.send({ user })
   })
 }
@@ -19,7 +31,7 @@ function getAll(request, reply) {
   } = request.query
 
   User.findAndCountAll({
-    attributes: ['id', 'name'],
+    attributes: ['id', 'firstName', 'lastName', 'username', 'email'],
     limit,
     offset: (step - 1) * limit,
     order: [[orderBy, order]]
@@ -49,9 +61,21 @@ function getOne(request, reply) {
 function updateOne(request, reply) {
   const { User } = this.sequelize.models
   const { id } = request.params
-  const { name } = request.body
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password
+  } = request.body
 
-  User.update({ name }, { where: { id } })
+  User.update({
+    firstName,
+    lastName,
+    username,
+    email,
+    password
+  }, { where: { id } })
     .then(() => User.findByPk(id))
     .then((user) => {
       reply.send({ user })

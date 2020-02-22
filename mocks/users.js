@@ -8,7 +8,11 @@ module.exports = async (app, options) => {
 
   for (let i = 0; i < options.numUsers; i += 1) {
     users.push({
-      name: chance.first()
+      firstName: chance.first(),
+      lastName: chance.last(),
+      username: chance.twitter().substring(1),
+      email: chance.email({ domain: 'meetup.com' }),
+      password: 'test'
     })
   }
 

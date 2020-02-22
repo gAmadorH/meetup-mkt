@@ -3,12 +3,32 @@ const addOne = {
   body: {
     type: 'object',
     additionalProperties: false,
-    required: ['name'],
+    required: ['firstName', 'lastName', 'username', 'email', 'password'],
     properties: {
-      name: {
+      firstName: {
         type: 'string',
         minLength: 10,
         maxLength: 50
+      },
+      lastName: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 50
+      },
+      username: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 50
+      },
+      email: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 50
+      },
+      password: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 100
       }
     }
   }
@@ -32,7 +52,7 @@ const getAll = {
         minimum: 1
       },
       orderBy: {
-        enum: ['id', 'name'],
+        enum: ['id', 'firstName', 'lastName', 'username', 'email', 'password'],
         default: 'id'
       },
       order: {
@@ -69,10 +89,25 @@ const updateOne = {
     type: 'object',
     additionalProperties: false,
     properties: {
-      name: {
+      firstName: {
         type: 'string',
         minLength: 10,
         maxLength: 50
+      },
+      lastName: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 50
+      },
+      username: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 50
+      },
+      password: {
+        type: 'string',
+        minLength: 10,
+        maxLength: 100
       }
     }
   }
