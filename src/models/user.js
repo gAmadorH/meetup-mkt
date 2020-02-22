@@ -42,7 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Meeting, { through: models.MeetingUsers })
   }
 
-  User.prototype.validatePassword = (password) => { bcrypt.compareSync(password, this.password) }
+  User.prototype.validatePassword = function validatePassword(password) {
+    return bcrypt.compareSync(password, this.password)
+  }
 
   return User
 }
