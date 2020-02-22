@@ -25,6 +25,10 @@ const addOne = {
         minLength: 10,
         maxLength: 50
       },
+      isAdmin: {
+        type: 'boolean',
+        default: false
+      },
       password: {
         type: 'string',
         minLength: 10,
@@ -52,7 +56,7 @@ const getAll = {
         minimum: 1
       },
       orderBy: {
-        enum: ['id', 'firstName', 'lastName', 'username', 'email', 'password'],
+        enum: ['id', 'firstName', 'lastName', 'username', 'email'],
         default: 'id'
       },
       order: {

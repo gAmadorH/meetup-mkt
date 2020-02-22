@@ -6,6 +6,7 @@ function addOne(request, reply) {
     lastName,
     username,
     email,
+    isAdmin,
     password
   } = request.body
 
@@ -14,6 +15,7 @@ function addOne(request, reply) {
     lastName,
     username,
     email,
+    isAdmin,
     password
   }).then((user) => {
     reply.send({ user })
@@ -31,7 +33,7 @@ function getAll(request, reply) {
   } = request.query
 
   User.findAndCountAll({
-    attributes: ['id', 'firstName', 'lastName', 'username', 'email'],
+    attributes: ['id', 'firstName', 'lastName', 'username', 'email', 'isAdmin'],
     limit,
     offset: (step - 1) * limit,
     order: [[orderBy, order]]
@@ -66,6 +68,7 @@ function updateOne(request, reply) {
     lastName,
     username,
     email,
+    isAdmin,
     password
   } = request.body
 
@@ -74,6 +77,7 @@ function updateOne(request, reply) {
     lastName,
     username,
     email,
+    isAdmin,
     password
   }, { where: { id } })
     .then(() => User.findByPk(id))

@@ -12,6 +12,7 @@ module.exports = async (app, options) => {
       lastName: chance.last(),
       username: chance.twitter().substring(1),
       email: chance.email({ domain: 'meetup.com' }),
+      isAdmin: chance.bool(),
       password: 'test'
     })
   }
