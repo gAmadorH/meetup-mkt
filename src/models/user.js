@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.belongsToMany(models.Meeting, { through: models.MeetingUsers })
+    User.hasMany(models.Meeting, { foreignKey: 'hostId' })
   }
 
   User.prototype.validatePassword = function validatePassword(password) {
