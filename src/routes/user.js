@@ -1,6 +1,6 @@
 const ctl = require('../controllers/user')
 const sch = require('../schemes/user')
-const middle = require('../middleware/meeting')
+const middle = require('../middleware/user')
 
 module.exports = (app, _options, next) => {
   // add one
