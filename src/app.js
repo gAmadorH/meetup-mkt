@@ -17,6 +17,7 @@ app.register(require('fastify-jwt'), {
   secret: jwtSecret
 })
 
+app.register(require('./auth'), { database })
 app.register(require('./sequelize'), { database })
 app.register(require('./models-loader'))
 app.register(require('./routes'), { prefix: '/api' })
