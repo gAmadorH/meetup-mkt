@@ -25,6 +25,7 @@ const validationOptions = {
 const { error, value } = Joi.validate(process.env, validationSchema, validationOptions)
 
 if (error) {
+  /* eslint-disable no-console */
   console.error('Config validation error:')
   throw error
 }
