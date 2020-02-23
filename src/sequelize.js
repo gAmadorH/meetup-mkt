@@ -2,16 +2,11 @@ const fp = require('fastify-plugin')
 const Sequelize = require('sequelize')
 
 function fastifySequelize(fastify, options, done) {
-  const {
-    db,
-    username,
-    password,
-    options: params
-  } = options.database
+  const { url, options: params } = options.database
   let sequelize = null
 
   try {
-    sequelize = new Sequelize(db, username, password, params)
+    sequelize = new Sequelize(url, params)
   } catch (err) {
     fastify.log.error('DATABASE\t\t[%s]', fastify.chalk.red('CONFIG ERROR'))
     done(err)

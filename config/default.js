@@ -30,6 +30,14 @@ if (error) {
   throw error
 }
 
+// generate a database url
+const dbUser = value.DATABASE_USER
+const dbPassword = value.DATABASE_PASSWORD
+const dbHost = value.DATABASE_HOST
+const dbPort = value.DATABASE_PORT
+const dbName = value.DATABASE_NAME
+const dbUrl = `postgres://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`
+
 module.exports = {
   // environment
   environment: value.NODE_ENV,
@@ -43,12 +51,8 @@ module.exports = {
 
   // database config
   database: {
-    db: value.DATABASE_NAME,
-    username: value.DATABASE_USER,
-    password: value.DATABASE_PASSWORD,
+    url: dbUrl,
     options: {
-      host: value.DATABASE_HOST,
-      port: value.DATABASE_PORT,
       dialect: value.DATABASE_DIALECT,
       logging: null
     }
