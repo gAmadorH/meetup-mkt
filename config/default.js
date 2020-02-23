@@ -11,7 +11,7 @@ const validationSchema = Joi.object({
   JWT_SECRET: Joi.string().token().required(),
   DATABASE_NAME: Joi.string().required(),
   DATABASE_USER: Joi.string().required(),
-  DATABASE_PASSWAORD: Joi.string().required(),
+  DATABASE_PASSWORD: Joi.string().required(),
   DATABASE_HOST: Joi.string().ip().required(),
   DATABASE_PORT: Joi.number().port().required(),
   DATABASE_DIALECT: Joi.string().required()
@@ -44,7 +44,7 @@ module.exports = {
   database: {
     db: value.DATABASE_NAME,
     username: value.DATABASE_USER,
-    password: value.DATABASE_PASSWAORD,
+    password: value.DATABASE_PASSWORD,
     options: {
       host: value.DATABASE_HOST,
       port: value.DATABASE_PORT,
