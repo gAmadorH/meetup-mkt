@@ -2,7 +2,7 @@ const fp = require('fastify-plugin')
 const Sequelize = require('sequelize')
 
 function fastifySequelize(fastify, options, done) {
-  const { url, options: params } = options.database
+  const { url, params } = options.database
   let sequelize = null
 
   try {

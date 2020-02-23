@@ -52,7 +52,7 @@ module.exports = {
   // database config
   database: {
     url: dbUrl,
-    options: {
+    params: {
       dialect: value.DATABASE_DIALECT,
       logging: null
     }
