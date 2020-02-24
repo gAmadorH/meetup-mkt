@@ -110,8 +110,7 @@ y tambien se cuentra en:
 
 ademas en el despliege tambien se encuentra la documentacion en:
 
-[http://157.245.143.235:3000/docs](http://157.245.143.
-235:3000/docs)
+[http://157.245.143.235:3000/docs](http://157.245.143.235:3000/docs)
 
 la docuementacion tambien esta en estre projecto
 
