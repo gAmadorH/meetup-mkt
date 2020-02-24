@@ -35,7 +35,7 @@ app.register(require('./routes'))
 app.after((err) => {
   if (err) {
     app.log.error('SYSTEM PLUGINS\t[%s]', app.chalk.red('error'))
-    fastify.log.error(err)
+    throw err
   }
 
   app.gracefulShutdown((signal, done) => {
