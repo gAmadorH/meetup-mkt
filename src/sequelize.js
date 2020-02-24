@@ -1,36 +1,38 @@
 const fp = require('fastify-plugin')
 const Sequelize = require('sequelize')
 
-function fastifySequelize(fastify, options, done) {
+function onClose(app, done) {
+  app.sequelize.close().then(() => {
+    app.log.info('DATABASE\t[%s]', app.chalk.white('disconnected'))
+    done()
+  }).catch((err) => {
+    app.log.error('DATABASE\t[%s]', app.chalk.red('no disconnected'))
+    done(err)
+  })
+}
+
+function pg(app, options, done) {
   const { url, params } = options.database
   let sequelize = null
 
   try {
     sequelize = new Sequelize(url, params)
   } catch (err) {
-    fastify.log.error('DATABASE\t\t[%s]', fastify.chalk.red('CONFIG ERROR'))
+    app.log.error('DATABASE\t\t[%s]', app.chalk.red('error'))
     done(err)
   }
 
-  fastify.decorate('sequelize', sequelize)
-  fastify.decorate('Sequelize', Sequelize)
+  app.decorate('sequelize', sequelize)
+  app.decorate('Sequelize', Sequelize)
 
   // if the app is closed, the db will also be closed
-  fastify.addHook('onClose', (app, next) => {
-    app.sequelize.close().then(() => {
-      app.log.info('DATABASE\t[%s]', app.chalk.white('DISCONNECTED'))
-      next()
-    }).catch((err) => {
-      app.log.error('DATABASE\t[%s]', app.chalk.red('ERROR'))
-      next(err)
-    })
-  })
+  app.addHook('onClose', onClose)
 
-  fastify.log.info('DB\t\t\t[%s]', fastify.chalk.magenta('ok'))
+  app.log.info('DATABASE\t\t[%s]', app.chalk.magenta('ready'))
   done()
 }
 
-module.exports = fp(fastifySequelize, {
+module.exports = fp(pg, {
   fastify: '>=0.13.1',
   decorators: {
     fastify: ['chalk']
