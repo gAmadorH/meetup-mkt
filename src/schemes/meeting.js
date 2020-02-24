@@ -46,7 +46,7 @@ const getAll = {
       },
       order: {
         enum: ['DESC', 'ASC'],
-        default: 'DESC'
+        default: 'ASC'
       }
     }
   }

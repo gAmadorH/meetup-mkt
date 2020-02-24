@@ -22,7 +22,7 @@ function addOne(request, reply) {
 
 // get all
 function getAll(request, reply) {
-  const { Meeting } = this.sequelize.models
+  const { User, Meeting } = this.sequelize.models
   const {
     limit,
     step,
@@ -31,7 +31,14 @@ function getAll(request, reply) {
   } = request.query
 
   Meeting.findAndCountAll({
-    attributes: { exclude: ['deletedAt'] },
+    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+    include: {
+      model: User,
+      as: 'participants',
+      attributes: { exclude: ['password', 'isAdmin', 'createdAt', 'updatedAt', 'deletedAt'] },
+      through: { attributes: [] }
+    },
+    distinct: true,
     limit,
     offset: (step - 1) * limit,
     order: [[orderBy, order]]
@@ -44,11 +51,21 @@ function getAll(request, reply) {
 
 // get one
 function getOne(request, reply) {
-  const { Meeting } = this.sequelize.models
+  const { User, Meeting } = this.sequelize.models
   const { id } = request.params
 
   Meeting.findByPk(id, {
-    attributes: { exclude: ['deletedAt'] }
+    attributes: { exclude: ['hostId', 'deletedAt'] },
+    include: [{
+      model: User,
+      as: 'participants',
+      attributes: { exclude: ['password', 'deletedAt'] },
+      through: { attributes: [] }
+    }, {
+      model: User,
+      as: 'host',
+      attributes: { exclude: ['password', 'deletedAt'] }
+    }]
   }).then((meeting) => {
     reply.send({ meeting })
   })
