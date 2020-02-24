@@ -4,7 +4,7 @@
   "description": "A meetup app for mkt equipment by in-house",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "npx pm2 startOrReload remote.ecosystem.config.js --only meetup-DEV",
     "dev": "nodemon src/index.js",
     "lint": "eslint src/*",
     "lint:fix": "eslint src/* --fix",
@@ -51,7 +51,10 @@
     "fastify-static": "^2.6.0",
     "inquirer": "^7.0.4",
     "joi": "^14.3.1",
+    "pg": "^7.18.2",
+    "pg-hstore": "^2.3.3",
     "pino-pretty": "^3.6.0",
+    "pm2": "^4.2.3",
     "sequelize": "^5.21.4"
   }
 }
