@@ -81,14 +81,17 @@ para generar las tablas de la base de datos usaremos el siguiente comando:
 $ npm run db:sync
 ```
 
+y despues solo debes confirmar
+
 ## populate
 
 Este paso es opcional, ya que solo agregaremos unos registros de prueba:
 
 ```
-$npm run db:seed:user
+$ npm run db:seed:user
 ```
 
+te preguntara cuandos usuarios deseas generar de forma aleatoria
 con esto crearemos usuarios en la base de datos
 
 
