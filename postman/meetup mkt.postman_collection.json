@@ -1,16 +1,16 @@
 {
 	"info": {
-		"_postman_id": "ee8e1034-6837-48cc-bb74-80b990b1c22b",
+		"_postman_id": "25958380-001a-4df3-9554-d0ef2e87e704",
 		"name": "meetup mkt",
 		"description": "this is meetup-mkt documentation",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "meeting",
+			"name": "public",
 			"item": [
 				{
-					"name": "add one",
+					"name": "login",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -23,7 +23,49 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"test meeting\"\n}",
+							"raw": "{\n\t\"email\": \"wacsatop@meetup.com\",\n\t\"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Meeting",
+			"item": [
+				{
+					"name": "Create a meeting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"test meeting\",\n\t\"description\": \"this is a thes meeting\",\n\t\"address\": \"Buenavista 150, col. agricola oriental\",\n\t\"date\": \"2020-02-23 21:33:53\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -41,17 +83,75 @@
 								"meetings"
 							]
 						},
-						"description": "add one meeting"
+						"description": "Create a meeting with name, description, address and date.\nWhen you create a meeting you are the host\nYou id as a user is the meeting hostId."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create a meeting",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test meeting\",\n    \"description\": \"this is a thes meeting\",\n    \"address\": \"Buenavista 150, col. agricola oriental\",\n    \"date\": \"2020-02-23 21:33:53\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/meetings",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"meetings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "272"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 03:54:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"meeting\": {\n        \"id\": 6,\n        \"name\": \"test meeting\",\n        \"description\": \"this is a thes meeting\",\n        \"address\": \"Buenavista 150, col. agricola oriental\",\n        \"date\": \"2020-02-24T03:33:53.000Z\",\n        \"hostId\": 2,\n        \"updatedAt\": \"2020-02-24T03:54:08.382Z\",\n        \"createdAt\": \"2020-02-24T03:54:08.382Z\",\n        \"deletedAt\": null\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "get all",
+					"name": "List meetings",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/meetings?limit=1",
+							"raw": "localhost:3000/api/meetings?limit=10&step=1&orderBy=id&order=ASC",
 							"host": [
 								"localhost"
 							],
@@ -63,21 +163,101 @@
 							"query": [
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "10",
+									"description": "Limit of the page (default: 10)"
+								},
+								{
+									"key": "step",
+									"value": "1",
+									"description": "Number of the page (default: 1)"
+								},
+								{
+									"key": "orderBy",
+									"value": "id",
+									"description": "Order by field ['id', 'name', 'description', 'address', 'date']  (default: id)"
+								},
+								{
+									"key": "order",
+									"value": "ASC",
+									"description": "Direction of the order  ['DESC', 'ASC']  (default: ASC)"
 								}
 							]
 						},
-						"description": "get all meetings"
+						"description": "List all meetings with id, name, description, address, date, hostId and  a participants list with some information such as: id, firstName, lastName, username, email"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List meetings",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/meetings?limit=10&step=1&orderBy=id&order=ASC",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"meetings"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "Limit of the page (default: 10)"
+										},
+										{
+											"key": "step",
+											"value": "1",
+											"description": "Number of the page (default: 1)"
+										},
+										{
+											"key": "orderBy",
+											"value": "id",
+											"description": "Order by field ['id', 'name', 'description', 'address', 'date']  (default: id)"
+										},
+										{
+											"key": "order",
+											"value": "ASC",
+											"description": "Direction of the order  ['DESC', 'ASC']  (default: ASC)"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1835"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 04:35:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 6,\n    \"steps\": 1,\n    \"meetings\": [\n        {\n            \"id\": 1,\n            \"name\": \"test meeting\",\n            \"description\": \"this is a thes meeting\",\n            \"address\": \"Buenavista 150, col. agricola oriental\",\n            \"date\": \"2020-02-24T03:33:53.000Z\",\n            \"hostId\": 2,\n            \"participants\": [\n                {\n                    \"id\": 31,\n                    \"firstName\": \"Glen\",\n                    \"lastName\": \"Benini\",\n                    \"username\": \"jarren\",\n                    \"email\": \"metserdin@meetup.com\"\n                },\n                {\n                    \"id\": 32,\n                    \"firstName\": \"Cory\",\n                    \"lastName\": \"Iqbal\",\n                    \"username\": \"awilofuki\",\n                    \"email\": \"uppal@meetup.com\"\n                },\n                {\n                    \"id\": 33,\n                    \"firstName\": \"Jeanette\",\n                    \"lastName\": \"Puccini\",\n                    \"username\": \"kob\",\n                    \"email\": \"vuwvaci@meetup.com\"\n                }\n            ]\n        },\n        {\n            \"id\": 2,\n            \"name\": \"test meeting\",\n            \"description\": \"this is a thes meeting\",\n            \"address\": \"Buenavista 150, col. agricola oriental\",\n            \"date\": \"2020-02-24T03:33:53.000Z\",\n            \"hostId\": 2,\n            \"participants\": [\n                {\n                    \"id\": 34,\n                    \"firstName\": \"Lola\",\n                    \"lastName\": \"Hill\",\n                    \"username\": \"nil\",\n                    \"email\": \"ubufuik@meetup.com\"\n                }\n            ]\n        },\n        {\n            \"id\": 3,\n            \"name\": \"test meeting\",\n            \"description\": \"this is a thes meeting\",\n            \"address\": \"Buenavista 150, col. agricola oriental\",\n            \"date\": \"2020-02-24T03:33:53.000Z\",\n            \"hostId\": 2,\n            \"participants\": []\n        },\n        {\n            \"id\": 4,\n            \"name\": \"test meeting\",\n            \"description\": \"this is a thes meeting\",\n            \"address\": \"Buenavista 150, col. agricola oriental\",\n            \"date\": \"2020-02-24T03:33:53.000Z\",\n            \"hostId\": 2,\n            \"participants\": []\n        },\n        {\n            \"id\": 5,\n            \"name\": \"test updated meeting\",\n            \"description\": \"this is a thes updated meeting\",\n            \"address\": \"Buenavista 150, col. agricola oriental\",\n            \"date\": \"2020-03-24T03:33:53.000Z\",\n            \"hostId\": 2,\n            \"participants\": [\n                {\n                    \"id\": 30,\n                    \"firstName\": \"Adeline\",\n                    \"lastName\": \"Obrien\",\n                    \"username\": \"deof\",\n                    \"email\": \"fa@meetup.com\"\n                }\n            ]\n        },\n        {\n            \"id\": 6,\n            \"name\": \"test meeting\",\n            \"description\": \"this is a thes meeting\",\n            \"address\": \"Buenavista 150, col. agricola oriental\",\n            \"date\": \"2020-02-24T03:33:53.000Z\",\n            \"hostId\": 2,\n            \"participants\": [\n                {\n                    \"id\": 20,\n                    \"firstName\": \"Alejandro\",\n                    \"lastName\": \"Tucker\",\n                    \"username\": \"oboeduki\",\n                    \"email\": \"wacsatop@meetup.com\"\n                },\n                {\n                    \"id\": 21,\n                    \"firstName\": \"Daisy\",\n                    \"lastName\": \"Cianchi\",\n                    \"username\": \"ta\",\n                    \"email\": \"gutiz@meetup.com\"\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
-					"name": "get one",
+					"name": "Detail a meeting",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/meetings/2",
+							"raw": "localhost:3000/api/meetings/1",
 							"host": [
 								"localhost"
 							],
@@ -85,15 +265,58 @@
 							"path": [
 								"api",
 								"meetings",
-								"2"
+								"1"
 							]
 						},
-						"description": "get one meeting"
+						"description": "List all meetings with id, name, description, address, date, createdAt, updatedAt and  a participants list with some information such as: id, firstName, lastName, username, email, isAdmin, createdAt, updatedAt.\nAnd host information like: id, firstName, lastName, username, email, isAdmin, createdAt, updatedAt\n       "
 					},
-					"response": []
+					"response": [
+						{
+							"name": "detail a meeting",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/meetings/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"meetings",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1038"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 04:47:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"meeting\": {\n        \"id\": 1,\n        \"name\": \"test meeting\",\n        \"description\": \"this is a thes meeting\",\n        \"address\": \"Buenavista 150, col. agricola oriental\",\n        \"date\": \"2020-02-24T03:33:53.000Z\",\n        \"createdAt\": \"2020-02-24T03:48:44.984Z\",\n        \"updatedAt\": \"2020-02-24T03:48:44.984Z\",\n        \"participants\": [\n            {\n                \"id\": 31,\n                \"firstName\": \"Glen\",\n                \"lastName\": \"Benini\",\n                \"username\": \"jarren\",\n                \"email\": \"metserdin@meetup.com\",\n                \"isAdmin\": false,\n                \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n                \"updatedAt\": \"2020-02-24T03:33:53.113Z\"\n            },\n            {\n                \"id\": 32,\n                \"firstName\": \"Cory\",\n                \"lastName\": \"Iqbal\",\n                \"username\": \"awilofuki\",\n                \"email\": \"uppal@meetup.com\",\n                \"isAdmin\": true,\n                \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n                \"updatedAt\": \"2020-02-24T03:33:53.113Z\"\n            },\n            {\n                \"id\": 33,\n                \"firstName\": \"Jeanette\",\n                \"lastName\": \"Puccini\",\n                \"username\": \"kob\",\n                \"email\": \"vuwvaci@meetup.com\",\n                \"isAdmin\": true,\n                \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n                \"updatedAt\": \"2020-02-24T03:33:53.113Z\"\n            }\n        ],\n        \"host\": {\n            \"id\": 2,\n            \"firstName\": \"Gavin\",\n            \"lastName\": \"Browne\",\n            \"username\": \"hegkazco\",\n            \"email\": \"jodoj@meetup.com\",\n            \"isAdmin\": false,\n            \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n            \"updatedAt\": \"2020-02-24T03:33:53.113Z\"\n        }\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "update one",
+					"name": "Update a meeting",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -106,7 +329,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"updated test meeting\"\n}",
+							"raw": "{\n\t\"name\": \"test updated meeting\",\n\t\"description\": \"this is a thes updated meeting\",\n\t\"address\": \"Buenavista 150, col. agricola oriental\",\n\t\"date\": \"2020-03-23 21:33:53\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,7 +337,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/meetings/2",
+							"raw": "localhost:3000/api/meetings/5",
 							"host": [
 								"localhost"
 							],
@@ -122,15 +345,74 @@
 							"path": [
 								"api",
 								"meetings",
-								"2"
+								"5"
 							]
 						},
-						"description": "update one meeting"
+						"description": "Update a meeting, name, description, address and date.\nthere are 2 rules in this endpoint:\n1. Only the host user can update the meeting\n2. Admin user can update the meeting without be the host"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update a meeting",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"test updated meeting\",\n\t\"description\": \"this is a thes updated meeting\",\n\t\"address\": \"Buenavista 150, col. agricola oriental\",\n\t\"date\": \"2020-03-23 21:33:53\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/meetings/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"meetings",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "271"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 04:54:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"meeting\": {\n        \"id\": 5,\n        \"name\": \"test updated meeting\",\n        \"description\": \"this is a thes updated meeting\",\n        \"address\": \"Buenavista 150, col. agricola oriental\",\n        \"date\": \"2020-03-24T03:33:53.000Z\",\n        \"createdAt\": \"2020-02-24T03:52:47.623Z\",\n        \"updatedAt\": \"2020-02-24T04:54:47.609Z\",\n        \"hostId\": 2\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "delete one",
+					"name": "Delete a meeting",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -146,9 +428,85 @@
 								"1"
 							]
 						},
-						"description": "delete one meeting"
+						"description": "Delete a meeting.\nthere are 2 rules in this endpoint:\n1. Only the host user can delete the meeting\n2. Admin user can delete the meeting without be the host"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete a meeting",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/meetings/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"meetings",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "2"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 04:56:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				}
+			],
+			"description": "This is the section for meetings, you can create, list, detail, update and delete meetings\nyou need a token for this sub section (you can go to public/login for one)\nThere are some rules that are depending of the specific endpoint, and they are mentioned in the certain endpoint",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMH0sImlhdCI6MTU4MjUyOTgwMSwiZXhwIjoxNTgyNTMxMDAxfQ.twEWE91j1EAsffZLi4VviqV36zasOStdkTn_iQpQvBM",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6c3c2ca9-2d46-44bc-8224-37acf1e880ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "962ffaf9-06de-4747-8a4e-ba2427143c0d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -157,7 +515,7 @@
 			"name": "user",
 			"item": [
 				{
-					"name": "add one",
+					"name": "Create a user",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -170,7 +528,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"new test user\"\n}",
+							"raw": "{\n\t\"firstName\": \"test\",\n\t\"lastName\": \"test\",\n\t\"username\": \"test\",\n\t\"email\": \"test@test.com\",\n\t\"isAdmin\": true,\n\t\"password\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -188,17 +546,75 @@
 								"users"
 							]
 						},
-						"description": "add one user"
+						"description": "Create a user with firstName, lastName, username, email, isAdmin (optional, default false) and password"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create a user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"test\",\n\t\"lastName\": \"test\",\n\t\"username\": \"test\",\n\t\"email\": \"test@test.com\",\n\t\"isAdmin\": true,\n\t\"password\": \"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/users",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "190"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 06:35:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 54,\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"username\": \"test\",\n        \"email\": \"test@test.com\",\n        \"isAdmin\": true,\n        \"updatedAt\": \"2020-02-24T06:35:42.099Z\",\n        \"createdAt\": \"2020-02-24T06:35:42.099Z\"\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "get all",
+					"name": "List  users",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/users?limit=1",
+							"raw": "localhost:3000/api/users?limit=10&step=1&orderBy=id&order=DESC",
 							"host": [
 								"localhost"
 							],
@@ -210,21 +626,164 @@
 							"query": [
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "10",
+									"description": "default 10"
+								},
+								{
+									"key": "step",
+									"value": "1",
+									"description": "default 1"
+								},
+								{
+									"key": "orderBy",
+									"value": "id",
+									"description": "['id', 'firstName', 'lastName', 'username', 'email'], default id"
+								},
+								{
+									"key": "order",
+									"value": "DESC",
+									"description": "['DESC', 'ASC'] default DESC"
 								}
 							]
 						},
-						"description": "get all users"
+						"description": "List all user with id, firstName, lastName, username, email, and isAdmin"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List  users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/users?limit=10&step=1&orderBy=id&order=DESC",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "default 10"
+										},
+										{
+											"key": "step",
+											"value": "1",
+											"description": "default 1"
+										},
+										{
+											"key": "orderBy",
+											"value": "id",
+											"description": "['id', 'firstName', 'lastName', 'username', 'email'], default id"
+										},
+										{
+											"key": "order",
+											"value": "DESC",
+											"description": "['DESC', 'ASC'] default DESC"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1130"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 07:57:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 55,\n    \"steps\": 6,\n    \"users\": [\n        {\n            \"id\": 55,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 54,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 53,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 52,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 51,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 50,\n            \"firstName\": \"Florence\",\n            \"lastName\": \"Cartwright\",\n            \"username\": \"ozzukude\",\n            \"email\": \"anisus@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 49,\n            \"firstName\": \"Jay\",\n            \"lastName\": \"Woods\",\n            \"username\": \"nekdiheh\",\n            \"email\": \"podam@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 48,\n            \"firstName\": \"Emma\",\n            \"lastName\": \"Baldwin\",\n            \"username\": \"mehime\",\n            \"email\": \"ubopi@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 47,\n            \"firstName\": \"Rachel\",\n            \"lastName\": \"Maestrini\",\n            \"username\": \"sisgacloz\",\n            \"email\": \"bezem@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 46,\n            \"firstName\": \"Norman\",\n            \"lastName\": \"Delgado\",\n            \"username\": \"gatebeug\",\n            \"email\": \"ri@meetup.com\",\n            \"isAdmin\": false\n        }\n    ]\n}"
+						},
+						{
+							"name": "List  users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/users?limit=10&step=1&orderBy=id&order=DESC",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "default 10"
+										},
+										{
+											"key": "step",
+											"value": "1",
+											"description": "default 1"
+										},
+										{
+											"key": "orderBy",
+											"value": "id",
+											"description": "['id', 'firstName', 'lastName', 'username', 'email'], default id"
+										},
+										{
+											"key": "order",
+											"value": "DESC",
+											"description": "['DESC', 'ASC'] default DESC"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1130"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 07:57:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 55,\n    \"steps\": 6,\n    \"users\": [\n        {\n            \"id\": 55,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 54,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 53,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 52,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 51,\n            \"firstName\": \"test\",\n            \"lastName\": \"test\",\n            \"username\": \"test\",\n            \"email\": \"test@test.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 50,\n            \"firstName\": \"Florence\",\n            \"lastName\": \"Cartwright\",\n            \"username\": \"ozzukude\",\n            \"email\": \"anisus@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 49,\n            \"firstName\": \"Jay\",\n            \"lastName\": \"Woods\",\n            \"username\": \"nekdiheh\",\n            \"email\": \"podam@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 48,\n            \"firstName\": \"Emma\",\n            \"lastName\": \"Baldwin\",\n            \"username\": \"mehime\",\n            \"email\": \"ubopi@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 47,\n            \"firstName\": \"Rachel\",\n            \"lastName\": \"Maestrini\",\n            \"username\": \"sisgacloz\",\n            \"email\": \"bezem@meetup.com\",\n            \"isAdmin\": true\n        },\n        {\n            \"id\": 46,\n            \"firstName\": \"Norman\",\n            \"lastName\": \"Delgado\",\n            \"username\": \"gatebeug\",\n            \"email\": \"ri@meetup.com\",\n            \"isAdmin\": false\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
-					"name": "get one",
+					"name": "Detail a user",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/users/2",
+							"raw": "localhost:3000/api/users/20",
 							"host": [
 								"localhost"
 							],
@@ -232,12 +791,55 @@
 							"path": [
 								"api",
 								"users",
-								"2"
+								"20"
 							]
 						},
 						"description": "get one user"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Detail a user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/api/users/20",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"20"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "955"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 07:59:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 20,\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"username\": \"test\",\n        \"email\": \"wacsatop@meetup.com\",\n        \"isAdmin\": false,\n        \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n        \"updatedAt\": \"2020-02-24T07:44:18.793Z\",\n        \"meetings\": [\n            {\n                \"id\": 4,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:52:42.780Z\",\n                \"updatedAt\": \"2020-02-24T03:52:42.780Z\",\n                \"hostId\": 2\n            },\n            {\n                \"id\": 6,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:54:08.382Z\",\n                \"updatedAt\": \"2020-02-24T03:54:08.382Z\",\n                \"hostId\": 2\n            }\n        ],\n        \"hostess\": [\n            {\n                \"id\": 7,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T07:37:36.592Z\",\n                \"updatedAt\": \"2020-02-24T07:37:36.592Z\",\n                \"hostId\": 20\n            }\n        ]\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "update one",
@@ -253,7 +855,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"updated test user\"\n}",
+							"raw": "{\n\t\"firstName\": \"test\",\n\t\"lastName\": \"test\",\n\t\"username\": \"test\",\n\t\"password\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -261,7 +863,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/users/1",
+							"raw": "localhost:3000/api/users/20",
 							"host": [
 								"localhost"
 							],
@@ -269,15 +871,74 @@
 							"path": [
 								"api",
 								"users",
-								"1"
+								"20"
 							]
 						},
 						"description": "update one user"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "update one",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"test\",\n\t\"lastName\": \"test\",\n\t\"username\": \"test\",\n\t\"password\": \"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/users/20",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"20"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "197"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 08:00:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 20,\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"username\": \"test\",\n        \"email\": \"wacsatop@meetup.com\",\n        \"isAdmin\": false,\n        \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n        \"updatedAt\": \"2020-02-24T08:00:57.392Z\"\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "enroll one in an event",
+					"name": "Enroll one in meetings",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -290,7 +951,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"meetingIds\": [ 3 ]\n}",
+							"raw": "{\n\t\"meetingIds\": [ 4 ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -298,7 +959,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/users/2/meeting",
+							"raw": "localhost:3000/api/users/20/meeting",
 							"host": [
 								"localhost"
 							],
@@ -306,16 +967,76 @@
 							"path": [
 								"api",
 								"users",
-								"2",
+								"20",
 								"meeting"
 							]
 						},
 						"description": "enroll one user in an event"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Enroll one in meetings",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"meetingIds\": [ 4 ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/users/20/meeting",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"20",
+										"meeting"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1290"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 07:47:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 20,\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"username\": \"test\",\n        \"email\": \"wacsatop@meetup.com\",\n        \"isAdmin\": false,\n        \"password\": \"$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2\",\n        \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n        \"updatedAt\": \"2020-02-24T07:44:18.793Z\",\n        \"deletedAt\": null,\n        \"meetings\": [\n            {\n                \"id\": 3,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:51:15.597Z\",\n                \"updatedAt\": \"2020-02-24T03:51:15.597Z\",\n                \"hostId\": 2\n            },\n            {\n                \"id\": 4,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:52:42.780Z\",\n                \"updatedAt\": \"2020-02-24T03:52:42.780Z\",\n                \"hostId\": 2\n            },\n            {\n                \"id\": 6,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:54:08.382Z\",\n                \"updatedAt\": \"2020-02-24T03:54:08.382Z\",\n                \"hostId\": 2\n            }\n        ],\n        \"hostess\": [\n            {\n                \"id\": 7,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T07:37:36.592Z\",\n                \"updatedAt\": \"2020-02-24T07:37:36.592Z\",\n                \"hostId\": 20\n            }\n        ]\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "enroll one in an event Copy",
+					"name": "Leave Meetings",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -336,7 +1057,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/users/2/meeting",
+							"raw": "localhost:3000/api/users/20/meeting",
 							"host": [
 								"localhost"
 							],
@@ -344,13 +1065,73 @@
 							"path": [
 								"api",
 								"users",
-								"2",
+								"20",
 								"meeting"
 							]
 						},
 						"description": "enroll one user in an event"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Leave Meetings",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"meetingIds\": [ 3 ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/api/users/20/meeting",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"20",
+										"meeting"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "1046"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Feb 2020 07:50:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 20,\n        \"firstName\": \"test\",\n        \"lastName\": \"test\",\n        \"username\": \"test\",\n        \"email\": \"wacsatop@meetup.com\",\n        \"isAdmin\": false,\n        \"password\": \"$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2\",\n        \"createdAt\": \"2020-02-24T03:33:53.113Z\",\n        \"updatedAt\": \"2020-02-24T07:44:18.793Z\",\n        \"deletedAt\": null,\n        \"meetings\": [\n            {\n                \"id\": 4,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:52:42.780Z\",\n                \"updatedAt\": \"2020-02-24T03:52:42.780Z\",\n                \"hostId\": 2\n            },\n            {\n                \"id\": 6,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T03:54:08.382Z\",\n                \"updatedAt\": \"2020-02-24T03:54:08.382Z\",\n                \"hostId\": 2\n            }\n        ],\n        \"hostess\": [\n            {\n                \"id\": 7,\n                \"name\": \"test meeting\",\n                \"description\": \"this is a thes meeting\",\n                \"address\": \"Buenavista 150, col. agricola oriental\",\n                \"date\": \"2020-02-24T03:33:53.000Z\",\n                \"createdAt\": \"2020-02-24T07:37:36.592Z\",\n                \"updatedAt\": \"2020-02-24T07:37:36.592Z\",\n                \"hostId\": 20\n            }\n        ]\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "delete one",
@@ -372,6 +1153,39 @@
 						"description": "delete one user"
 					},
 					"response": []
+				}
+			],
+			"description": "This is the section for users, you can create, list, detail, update, enrole to meeting, leave a meeting and delete users\nyou need a token for this sub section (you can go to public/login for one)\n\nThere are some rules that are depending of the specific endpoint, and they are mentioned in the certain endpoint",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMH0sImlhdCI6MTU4MjUzMDg1NywiZXhwIjoxNTgyNTMyMDU3fQ.8LN0YCct4lmre8DH3OJcmlIHoF0zMUKitfFBU_5_64U",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4d4b14f8-ef4a-44ce-b194-c4ed6efe112d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7acf3e4c-dfb1-4e0b-b276-02e4f8f781d1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}

@@ -1,0 +1,2761 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "meetup mkt",
+    "description": "this is meetup-mkt documentation",
+    "contact": {}
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "login",
+        "tags": [
+          "public"
+        ],
+        "operationId": "login",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/loginrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/meetings": {
+      "post": {
+        "description": "Create a meeting with name, description, address and date.\nWhen you create a meeting you are the host\nYou id as a user is the meeting hostId.",
+        "summary": "Create a meeting",
+        "tags": [
+          "Meeting"
+        ],
+        "operationId": "Createameeting",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateameetingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Createameeting"
+            },
+            "examples": {
+              "application/json": {
+                "meeting": {
+                  "id": 6,
+                  "name": "test meeting",
+                  "description": "this is a thes meeting",
+                  "address": "Buenavista 150, col. agricola oriental",
+                  "date": "2020-02-24T03:33:53Z",
+                  "hostId": 2,
+                  "updatedAt": "2020-02-24T03:54:08.382Z",
+                  "createdAt": "2020-02-24T03:54:08.382Z",
+                  "deletedAt": null
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "272"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 03:54:08 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "List all meetings with id, name, description, address, date, hostId and  a participants list with some information such as: id, firstName, lastName, username, email",
+        "summary": "List meetings",
+        "tags": [
+          "Meeting"
+        ],
+        "operationId": "Listmeetings",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": "Limit of the page (default: 10)"
+          },
+          {
+            "name": "step",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of the page (default: 1)"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Order by field ['id', 'name', 'description', 'address', 'date']  (default: id)"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Direction of the order  ['DESC', 'ASC']  (default: ASC)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Listmeetings"
+            },
+            "examples": {
+              "application/json": {
+                "total": 6,
+                "steps": 1,
+                "meetings": [
+                  {
+                    "id": 1,
+                    "name": "test meeting",
+                    "description": "this is a thes meeting",
+                    "address": "Buenavista 150, col. agricola oriental",
+                    "date": "2020-02-24T03:33:53Z",
+                    "hostId": 2,
+                    "participants": [
+                      {
+                        "id": 31,
+                        "firstName": "Glen",
+                        "lastName": "Benini",
+                        "username": "jarren",
+                        "email": "metserdin@meetup.com"
+                      },
+                      {
+                        "id": 32,
+                        "firstName": "Cory",
+                        "lastName": "Iqbal",
+                        "username": "awilofuki",
+                        "email": "uppal@meetup.com"
+                      },
+                      {
+                        "id": 33,
+                        "firstName": "Jeanette",
+                        "lastName": "Puccini",
+                        "username": "kob",
+                        "email": "vuwvaci@meetup.com"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "test meeting",
+                    "description": "this is a thes meeting",
+                    "address": "Buenavista 150, col. agricola oriental",
+                    "date": "2020-02-24T03:33:53Z",
+                    "hostId": 2,
+                    "participants": [
+                      {
+                        "id": 34,
+                        "firstName": "Lola",
+                        "lastName": "Hill",
+                        "username": "nil",
+                        "email": "ubufuik@meetup.com"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "test meeting",
+                    "description": "this is a thes meeting",
+                    "address": "Buenavista 150, col. agricola oriental",
+                    "date": "2020-02-24T03:33:53Z",
+                    "hostId": 2,
+                    "participants": []
+                  },
+                  {
+                    "id": 4,
+                    "name": "test meeting",
+                    "description": "this is a thes meeting",
+                    "address": "Buenavista 150, col. agricola oriental",
+                    "date": "2020-02-24T03:33:53Z",
+                    "hostId": 2,
+                    "participants": []
+                  },
+                  {
+                    "id": 5,
+                    "name": "test updated meeting",
+                    "description": "this is a thes updated meeting",
+                    "address": "Buenavista 150, col. agricola oriental",
+                    "date": "2020-03-24T03:33:53Z",
+                    "hostId": 2,
+                    "participants": [
+                      {
+                        "id": 30,
+                        "firstName": "Adeline",
+                        "lastName": "Obrien",
+                        "username": "deof",
+                        "email": "fa@meetup.com"
+                      }
+                    ]
+                  },
+                  {
+                    "id": 6,
+                    "name": "test meeting",
+                    "description": "this is a thes meeting",
+                    "address": "Buenavista 150, col. agricola oriental",
+                    "date": "2020-02-24T03:33:53Z",
+                    "hostId": 2,
+                    "participants": [
+                      {
+                        "id": 20,
+                        "firstName": "Alejandro",
+                        "lastName": "Tucker",
+                        "username": "oboeduki",
+                        "email": "wacsatop@meetup.com"
+                      },
+                      {
+                        "id": 21,
+                        "firstName": "Daisy",
+                        "lastName": "Cianchi",
+                        "username": "ta",
+                        "email": "gutiz@meetup.com"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "1835"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 04:35:00 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meetings/1": {
+      "get": {
+        "description": "List all meetings with id, name, description, address, date, createdAt, updatedAt and  a participants list with some information such as: id, firstName, lastName, username, email, isAdmin, createdAt, updatedAt.\nAnd host information like: id, firstName, lastName, username, email, isAdmin, createdAt, updatedAt\n       ",
+        "summary": "Detail a meeting",
+        "tags": [
+          "Meeting"
+        ],
+        "operationId": "Detailameeting",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/detailameeting"
+            },
+            "examples": {
+              "application/json": {
+                "meeting": {
+                  "id": 1,
+                  "name": "test meeting",
+                  "description": "this is a thes meeting",
+                  "address": "Buenavista 150, col. agricola oriental",
+                  "date": "2020-02-24T03:33:53Z",
+                  "createdAt": "2020-02-24T03:48:44.984Z",
+                  "updatedAt": "2020-02-24T03:48:44.984Z",
+                  "participants": [
+                    {
+                      "id": 31,
+                      "firstName": "Glen",
+                      "lastName": "Benini",
+                      "username": "jarren",
+                      "email": "metserdin@meetup.com",
+                      "isAdmin": false,
+                      "createdAt": "2020-02-24T03:33:53.113Z",
+                      "updatedAt": "2020-02-24T03:33:53.113Z"
+                    },
+                    {
+                      "id": 32,
+                      "firstName": "Cory",
+                      "lastName": "Iqbal",
+                      "username": "awilofuki",
+                      "email": "uppal@meetup.com",
+                      "isAdmin": true,
+                      "createdAt": "2020-02-24T03:33:53.113Z",
+                      "updatedAt": "2020-02-24T03:33:53.113Z"
+                    },
+                    {
+                      "id": 33,
+                      "firstName": "Jeanette",
+                      "lastName": "Puccini",
+                      "username": "kob",
+                      "email": "vuwvaci@meetup.com",
+                      "isAdmin": true,
+                      "createdAt": "2020-02-24T03:33:53.113Z",
+                      "updatedAt": "2020-02-24T03:33:53.113Z"
+                    }
+                  ],
+                  "host": {
+                    "id": 2,
+                    "firstName": "Gavin",
+                    "lastName": "Browne",
+                    "username": "hegkazco",
+                    "email": "jodoj@meetup.com",
+                    "isAdmin": false,
+                    "createdAt": "2020-02-24T03:33:53.113Z",
+                    "updatedAt": "2020-02-24T03:33:53.113Z"
+                  }
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "1038"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 04:47:44 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a meeting.\nthere are 2 rules in this endpoint:\n1. Only the host user can delete the meeting\n2. Admin user can delete the meeting without be the host",
+        "summary": "Delete a meeting",
+        "tags": [
+          "Meeting"
+        ],
+        "operationId": "Deleteameeting",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            },
+            "examples": {
+              "application/json": {}
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "2"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 04:56:47 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meetings/5": {
+      "put": {
+        "description": "Update a meeting, name, description, address and date.\nthere are 2 rules in this endpoint:\n1. Only the host user can update the meeting\n2. Admin user can update the meeting without be the host",
+        "summary": "Update a meeting",
+        "tags": [
+          "Meeting"
+        ],
+        "operationId": "Updateameeting",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdateameetingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Updateameeting"
+            },
+            "examples": {
+              "application/json": {
+                "meeting": {
+                  "id": 5,
+                  "name": "test updated meeting",
+                  "description": "this is a thes updated meeting",
+                  "address": "Buenavista 150, col. agricola oriental",
+                  "date": "2020-03-24T03:33:53Z",
+                  "createdAt": "2020-02-24T03:52:47.623Z",
+                  "updatedAt": "2020-02-24T04:54:47.609Z",
+                  "hostId": 2
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "271"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 04:54:47 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "Create a user with firstName, lastName, username, email, isAdmin (optional, default false) and password",
+        "summary": "Create a user",
+        "tags": [
+          "user"
+        ],
+        "operationId": "Createauser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateauserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Createauser"
+            },
+            "examples": {
+              "application/json": {
+                "user": {
+                  "id": 54,
+                  "firstName": "test",
+                  "lastName": "test",
+                  "username": "test",
+                  "email": "test@test.com",
+                  "isAdmin": true,
+                  "updatedAt": "2020-02-24T06:35:42.099Z",
+                  "createdAt": "2020-02-24T06:35:42.099Z"
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "190"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 06:35:42 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "List all user with id, firstName, lastName, username, email, and isAdmin",
+        "summary": "List  users",
+        "tags": [
+          "user"
+        ],
+        "operationId": "Listusers",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": "default 10"
+          },
+          {
+            "name": "step",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": "default 1"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "['id', 'firstName', 'lastName', 'username', 'email'], default id"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "['DESC', 'ASC'] default DESC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Listusers"
+            },
+            "examples": {
+              "application/json": {
+                "total": 55,
+                "steps": 6,
+                "users": [
+                  {
+                    "id": 55,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 54,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 53,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 52,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 51,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 50,
+                    "firstName": "Florence",
+                    "lastName": "Cartwright",
+                    "username": "ozzukude",
+                    "email": "anisus@meetup.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 49,
+                    "firstName": "Jay",
+                    "lastName": "Woods",
+                    "username": "nekdiheh",
+                    "email": "podam@meetup.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 48,
+                    "firstName": "Emma",
+                    "lastName": "Baldwin",
+                    "username": "mehime",
+                    "email": "ubopi@meetup.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 47,
+                    "firstName": "Rachel",
+                    "lastName": "Maestrini",
+                    "username": "sisgacloz",
+                    "email": "bezem@meetup.com",
+                    "isAdmin": true
+                  },
+                  {
+                    "id": 46,
+                    "firstName": "Norman",
+                    "lastName": "Delgado",
+                    "username": "gatebeug",
+                    "email": "ri@meetup.com",
+                    "isAdmin": false
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "1130"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 07:57:45 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/20": {
+      "get": {
+        "description": "get one user",
+        "summary": "Detail a user",
+        "tags": [
+          "user"
+        ],
+        "operationId": "Detailauser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Detailauser"
+            },
+            "examples": {
+              "application/json": {
+                "user": {
+                  "id": 20,
+                  "firstName": "test",
+                  "lastName": "test",
+                  "username": "test",
+                  "email": "wacsatop@meetup.com",
+                  "isAdmin": false,
+                  "createdAt": "2020-02-24T03:33:53.113Z",
+                  "updatedAt": "2020-02-24T07:44:18.793Z",
+                  "meetings": [
+                    {
+                      "id": 4,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:52:42.78Z",
+                      "updatedAt": "2020-02-24T03:52:42.78Z",
+                      "hostId": 2
+                    },
+                    {
+                      "id": 6,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:54:08.382Z",
+                      "updatedAt": "2020-02-24T03:54:08.382Z",
+                      "hostId": 2
+                    }
+                  ],
+                  "hostess": [
+                    {
+                      "id": 7,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T07:37:36.592Z",
+                      "updatedAt": "2020-02-24T07:37:36.592Z",
+                      "hostId": 20
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "955"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 07:59:12 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "update one user",
+        "summary": "update one",
+        "tags": [
+          "user"
+        ],
+        "operationId": "updateone",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updateonerequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updateone"
+            },
+            "examples": {
+              "application/json": {
+                "user": {
+                  "id": 20,
+                  "firstName": "test",
+                  "lastName": "test",
+                  "username": "test",
+                  "email": "wacsatop@meetup.com",
+                  "isAdmin": false,
+                  "createdAt": "2020-02-24T03:33:53.113Z",
+                  "updatedAt": "2020-02-24T08:00:57.392Z"
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "197"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 08:00:57 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/20/meeting": {
+      "put": {
+        "description": "enroll one user in an event",
+        "summary": "Enroll one in meetings",
+        "tags": [
+          "user"
+        ],
+        "operationId": "Enrolloneinmeetings",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EnrolloneinmeetingsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Enrolloneinmeetings"
+            },
+            "examples": {
+              "application/json": {
+                "user": {
+                  "id": 20,
+                  "firstName": "test",
+                  "lastName": "test",
+                  "username": "test",
+                  "email": "wacsatop@meetup.com",
+                  "isAdmin": false,
+                  "password": "$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2",
+                  "createdAt": "2020-02-24T03:33:53.113Z",
+                  "updatedAt": "2020-02-24T07:44:18.793Z",
+                  "deletedAt": null,
+                  "meetings": [
+                    {
+                      "id": 3,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:51:15.597Z",
+                      "updatedAt": "2020-02-24T03:51:15.597Z",
+                      "hostId": 2
+                    },
+                    {
+                      "id": 4,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:52:42.78Z",
+                      "updatedAt": "2020-02-24T03:52:42.78Z",
+                      "hostId": 2
+                    },
+                    {
+                      "id": 6,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:54:08.382Z",
+                      "updatedAt": "2020-02-24T03:54:08.382Z",
+                      "hostId": 2
+                    }
+                  ],
+                  "hostess": [
+                    {
+                      "id": 7,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T07:37:36.592Z",
+                      "updatedAt": "2020-02-24T07:37:36.592Z",
+                      "hostId": 20
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "1290"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 07:47:38 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "enroll one user in an event",
+        "summary": "Leave Meetings",
+        "tags": [
+          "user"
+        ],
+        "operationId": "LeaveMeetings",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/LeaveMeetingsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/LeaveMeetings"
+            },
+            "examples": {
+              "application/json": {
+                "user": {
+                  "id": 20,
+                  "firstName": "test",
+                  "lastName": "test",
+                  "username": "test",
+                  "email": "wacsatop@meetup.com",
+                  "isAdmin": false,
+                  "password": "$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2",
+                  "createdAt": "2020-02-24T03:33:53.113Z",
+                  "updatedAt": "2020-02-24T07:44:18.793Z",
+                  "deletedAt": null,
+                  "meetings": [
+                    {
+                      "id": 4,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:52:42.78Z",
+                      "updatedAt": "2020-02-24T03:52:42.78Z",
+                      "hostId": 2
+                    },
+                    {
+                      "id": 6,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T03:54:08.382Z",
+                      "updatedAt": "2020-02-24T03:54:08.382Z",
+                      "hostId": 2
+                    }
+                  ],
+                  "hostess": [
+                    {
+                      "id": 7,
+                      "name": "test meeting",
+                      "description": "this is a thes meeting",
+                      "address": "Buenavista 150, col. agricola oriental",
+                      "date": "2020-02-24T03:33:53Z",
+                      "createdAt": "2020-02-24T07:37:36.592Z",
+                      "updatedAt": "2020-02-24T07:37:36.592Z",
+                      "hostId": 20
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "1046"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 24 Feb 2020 07:50:11 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/1": {
+      "delete": {
+        "description": "delete one user",
+        "summary": "delete one",
+        "tags": [
+          "user"
+        ],
+        "operationId": "deleteone",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "loginrequest": {
+      "title": "loginrequest",
+      "example": {
+        "email": "wacsatop@meetup.com",
+        "password": "test"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "CreateameetingRequest": {
+      "title": "CreateameetingRequest",
+      "example": {
+        "name": "test meeting",
+        "description": "this is a thes meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-02-23 21:33:53"
+      },
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "address",
+        "date"
+      ]
+    },
+    "Createameeting": {
+      "title": "Createameeting",
+      "example": {
+        "meeting": {
+          "id": 6,
+          "name": "test meeting",
+          "description": "this is a thes meeting",
+          "address": "Buenavista 150, col. agricola oriental",
+          "date": "2020-02-24T03:33:53Z",
+          "hostId": 2,
+          "updatedAt": "2020-02-24T03:54:08.382Z",
+          "createdAt": "2020-02-24T03:54:08.382Z",
+          "deletedAt": null
+        }
+      },
+      "type": "object",
+      "properties": {
+        "meeting": {
+          "$ref": "#/definitions/Meeting"
+        }
+      },
+      "required": [
+        "meeting"
+      ]
+    },
+    "Meeting": {
+      "title": "Meeting",
+      "example": {
+        "id": 6,
+        "name": "test meeting",
+        "description": "this is a thes meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-02-24T03:33:53Z",
+        "hostId": 2,
+        "updatedAt": "2020-02-24T03:54:08.382Z",
+        "createdAt": "2020-02-24T03:54:08.382Z",
+        "deletedAt": null
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "hostId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "address",
+        "date",
+        "hostId",
+        "updatedAt",
+        "createdAt",
+        "deletedAt"
+      ]
+    },
+    "Listmeetings": {
+      "title": "Listmeetings",
+      "example": {
+        "total": 6,
+        "steps": 1,
+        "meetings": [
+          {
+            "id": 1,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "hostId": 2,
+            "participants": [
+              {
+                "id": 31,
+                "firstName": "Glen",
+                "lastName": "Benini",
+                "username": "jarren",
+                "email": "metserdin@meetup.com"
+              },
+              {
+                "id": 32,
+                "firstName": "Cory",
+                "lastName": "Iqbal",
+                "username": "awilofuki",
+                "email": "uppal@meetup.com"
+              },
+              {
+                "id": 33,
+                "firstName": "Jeanette",
+                "lastName": "Puccini",
+                "username": "kob",
+                "email": "vuwvaci@meetup.com"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "hostId": 2,
+            "participants": [
+              {
+                "id": 34,
+                "firstName": "Lola",
+                "lastName": "Hill",
+                "username": "nil",
+                "email": "ubufuik@meetup.com"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "hostId": 2,
+            "participants": []
+          },
+          {
+            "id": 4,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "hostId": 2,
+            "participants": []
+          },
+          {
+            "id": 5,
+            "name": "test updated meeting",
+            "description": "this is a thes updated meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-03-24T03:33:53Z",
+            "hostId": 2,
+            "participants": [
+              {
+                "id": 30,
+                "firstName": "Adeline",
+                "lastName": "Obrien",
+                "username": "deof",
+                "email": "fa@meetup.com"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "hostId": 2,
+            "participants": [
+              {
+                "id": 20,
+                "firstName": "Alejandro",
+                "lastName": "Tucker",
+                "username": "oboeduki",
+                "email": "wacsatop@meetup.com"
+              },
+              {
+                "id": 21,
+                "firstName": "Daisy",
+                "lastName": "Cianchi",
+                "username": "ta",
+                "email": "gutiz@meetup.com"
+              }
+            ]
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "steps": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "meetings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Meeting1"
+          }
+        }
+      },
+      "required": [
+        "total",
+        "steps",
+        "meetings"
+      ]
+    },
+    "Meeting1": {
+      "title": "Meeting1",
+      "example": {
+        "id": 1,
+        "name": "test meeting",
+        "description": "this is a thes meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-02-24T03:33:53Z",
+        "hostId": 2,
+        "participants": [
+          {
+            "id": 31,
+            "firstName": "Glen",
+            "lastName": "Benini",
+            "username": "jarren",
+            "email": "metserdin@meetup.com"
+          },
+          {
+            "id": 32,
+            "firstName": "Cory",
+            "lastName": "Iqbal",
+            "username": "awilofuki",
+            "email": "uppal@meetup.com"
+          },
+          {
+            "id": 33,
+            "firstName": "Jeanette",
+            "lastName": "Puccini",
+            "username": "kob",
+            "email": "vuwvaci@meetup.com"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "hostId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Participant"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "address",
+        "date",
+        "hostId",
+        "participants"
+      ]
+    },
+    "Participant": {
+      "title": "Participant",
+      "example": {
+        "id": 31,
+        "firstName": "Glen",
+        "lastName": "Benini",
+        "username": "jarren",
+        "email": "metserdin@meetup.com"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "detailameeting": {
+      "title": "detailameeting",
+      "example": {
+        "meeting": {
+          "id": 1,
+          "name": "test meeting",
+          "description": "this is a thes meeting",
+          "address": "Buenavista 150, col. agricola oriental",
+          "date": "2020-02-24T03:33:53Z",
+          "createdAt": "2020-02-24T03:48:44.984Z",
+          "updatedAt": "2020-02-24T03:48:44.984Z",
+          "participants": [
+            {
+              "id": 31,
+              "firstName": "Glen",
+              "lastName": "Benini",
+              "username": "jarren",
+              "email": "metserdin@meetup.com",
+              "isAdmin": false,
+              "createdAt": "2020-02-24T03:33:53.113Z",
+              "updatedAt": "2020-02-24T03:33:53.113Z"
+            },
+            {
+              "id": 32,
+              "firstName": "Cory",
+              "lastName": "Iqbal",
+              "username": "awilofuki",
+              "email": "uppal@meetup.com",
+              "isAdmin": true,
+              "createdAt": "2020-02-24T03:33:53.113Z",
+              "updatedAt": "2020-02-24T03:33:53.113Z"
+            },
+            {
+              "id": 33,
+              "firstName": "Jeanette",
+              "lastName": "Puccini",
+              "username": "kob",
+              "email": "vuwvaci@meetup.com",
+              "isAdmin": true,
+              "createdAt": "2020-02-24T03:33:53.113Z",
+              "updatedAt": "2020-02-24T03:33:53.113Z"
+            }
+          ],
+          "host": {
+            "id": 2,
+            "firstName": "Gavin",
+            "lastName": "Browne",
+            "username": "hegkazco",
+            "email": "jodoj@meetup.com",
+            "isAdmin": false,
+            "createdAt": "2020-02-24T03:33:53.113Z",
+            "updatedAt": "2020-02-24T03:33:53.113Z"
+          }
+        }
+      },
+      "type": "object",
+      "properties": {
+        "meeting": {
+          "$ref": "#/definitions/Meeting2"
+        }
+      },
+      "required": [
+        "meeting"
+      ]
+    },
+    "Meeting2": {
+      "title": "Meeting2",
+      "example": {
+        "id": 1,
+        "name": "test meeting",
+        "description": "this is a thes meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-02-24T03:33:53Z",
+        "createdAt": "2020-02-24T03:48:44.984Z",
+        "updatedAt": "2020-02-24T03:48:44.984Z",
+        "participants": [
+          {
+            "id": 31,
+            "firstName": "Glen",
+            "lastName": "Benini",
+            "username": "jarren",
+            "email": "metserdin@meetup.com",
+            "isAdmin": false,
+            "createdAt": "2020-02-24T03:33:53.113Z",
+            "updatedAt": "2020-02-24T03:33:53.113Z"
+          },
+          {
+            "id": 32,
+            "firstName": "Cory",
+            "lastName": "Iqbal",
+            "username": "awilofuki",
+            "email": "uppal@meetup.com",
+            "isAdmin": true,
+            "createdAt": "2020-02-24T03:33:53.113Z",
+            "updatedAt": "2020-02-24T03:33:53.113Z"
+          },
+          {
+            "id": 33,
+            "firstName": "Jeanette",
+            "lastName": "Puccini",
+            "username": "kob",
+            "email": "vuwvaci@meetup.com",
+            "isAdmin": true,
+            "createdAt": "2020-02-24T03:33:53.113Z",
+            "updatedAt": "2020-02-24T03:33:53.113Z"
+          }
+        ],
+        "host": {
+          "id": 2,
+          "firstName": "Gavin",
+          "lastName": "Browne",
+          "username": "hegkazco",
+          "email": "jodoj@meetup.com",
+          "isAdmin": false,
+          "createdAt": "2020-02-24T03:33:53.113Z",
+          "updatedAt": "2020-02-24T03:33:53.113Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Participant1"
+          }
+        },
+        "host": {
+          "$ref": "#/definitions/Host"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "address",
+        "date",
+        "createdAt",
+        "updatedAt",
+        "participants",
+        "host"
+      ]
+    },
+    "Participant1": {
+      "title": "Participant1",
+      "example": {
+        "id": 31,
+        "firstName": "Glen",
+        "lastName": "Benini",
+        "username": "jarren",
+        "email": "metserdin@meetup.com",
+        "isAdmin": false,
+        "createdAt": "2020-02-24T03:33:53.113Z",
+        "updatedAt": "2020-02-24T03:33:53.113Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Host": {
+      "title": "Host",
+      "example": {
+        "id": 2,
+        "firstName": "Gavin",
+        "lastName": "Browne",
+        "username": "hegkazco",
+        "email": "jodoj@meetup.com",
+        "isAdmin": false,
+        "createdAt": "2020-02-24T03:33:53.113Z",
+        "updatedAt": "2020-02-24T03:33:53.113Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UpdateameetingRequest": {
+      "title": "UpdateameetingRequest",
+      "example": {
+        "name": "test updated meeting",
+        "description": "this is a thes updated meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-03-23 21:33:53"
+      },
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "address",
+        "date"
+      ]
+    },
+    "Updateameeting": {
+      "title": "Updateameeting",
+      "example": {
+        "meeting": {
+          "id": 5,
+          "name": "test updated meeting",
+          "description": "this is a thes updated meeting",
+          "address": "Buenavista 150, col. agricola oriental",
+          "date": "2020-03-24T03:33:53Z",
+          "createdAt": "2020-02-24T03:52:47.623Z",
+          "updatedAt": "2020-02-24T04:54:47.609Z",
+          "hostId": 2
+        }
+      },
+      "type": "object",
+      "properties": {
+        "meeting": {
+          "$ref": "#/definitions/Meeting3"
+        }
+      },
+      "required": [
+        "meeting"
+      ]
+    },
+    "Meeting3": {
+      "title": "Meeting3",
+      "example": {
+        "id": 5,
+        "name": "test updated meeting",
+        "description": "this is a thes updated meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-03-24T03:33:53Z",
+        "createdAt": "2020-02-24T03:52:47.623Z",
+        "updatedAt": "2020-02-24T04:54:47.609Z",
+        "hostId": 2
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "hostId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "address",
+        "date",
+        "createdAt",
+        "updatedAt",
+        "hostId"
+      ]
+    },
+    "CreateauserRequest": {
+      "title": "CreateauserRequest",
+      "example": {
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "test@test.com",
+        "isAdmin": true,
+        "password": "test"
+      },
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin",
+        "password"
+      ]
+    },
+    "Createauser": {
+      "title": "Createauser",
+      "example": {
+        "user": {
+          "id": 54,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "test@test.com",
+          "isAdmin": true,
+          "updatedAt": "2020-02-24T06:35:42.099Z",
+          "createdAt": "2020-02-24T06:35:42.099Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "required": [
+        "user"
+      ]
+    },
+    "User": {
+      "title": "User",
+      "example": {
+        "id": 54,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "test@test.com",
+        "isAdmin": true,
+        "updatedAt": "2020-02-24T06:35:42.099Z",
+        "createdAt": "2020-02-24T06:35:42.099Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin",
+        "updatedAt",
+        "createdAt"
+      ]
+    },
+    "Listusers": {
+      "title": "Listusers",
+      "example": {
+        "total": 55,
+        "steps": 6,
+        "users": [
+          {
+            "id": 55,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true
+          },
+          {
+            "id": 54,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true
+          },
+          {
+            "id": 53,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true
+          },
+          {
+            "id": 52,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true
+          },
+          {
+            "id": 51,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true
+          },
+          {
+            "id": 50,
+            "firstName": "Florence",
+            "lastName": "Cartwright",
+            "username": "ozzukude",
+            "email": "anisus@meetup.com",
+            "isAdmin": true
+          },
+          {
+            "id": 49,
+            "firstName": "Jay",
+            "lastName": "Woods",
+            "username": "nekdiheh",
+            "email": "podam@meetup.com",
+            "isAdmin": true
+          },
+          {
+            "id": 48,
+            "firstName": "Emma",
+            "lastName": "Baldwin",
+            "username": "mehime",
+            "email": "ubopi@meetup.com",
+            "isAdmin": true
+          },
+          {
+            "id": 47,
+            "firstName": "Rachel",
+            "lastName": "Maestrini",
+            "username": "sisgacloz",
+            "email": "bezem@meetup.com",
+            "isAdmin": true
+          },
+          {
+            "id": 46,
+            "firstName": "Norman",
+            "lastName": "Delgado",
+            "username": "gatebeug",
+            "email": "ri@meetup.com",
+            "isAdmin": false
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "steps": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User1"
+          }
+        }
+      },
+      "required": [
+        "total",
+        "steps",
+        "users"
+      ]
+    },
+    "User1": {
+      "title": "User1",
+      "example": {
+        "id": 55,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "test@test.com",
+        "isAdmin": true
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin"
+      ]
+    },
+    "Detailauser": {
+      "title": "Detailauser",
+      "example": {
+        "user": {
+          "id": 20,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "wacsatop@meetup.com",
+          "isAdmin": false,
+          "createdAt": "2020-02-24T03:33:53.113Z",
+          "updatedAt": "2020-02-24T07:44:18.793Z",
+          "meetings": [
+            {
+              "id": 4,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:52:42.78Z",
+              "updatedAt": "2020-02-24T03:52:42.78Z",
+              "hostId": 2
+            },
+            {
+              "id": 6,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:54:08.382Z",
+              "updatedAt": "2020-02-24T03:54:08.382Z",
+              "hostId": 2
+            }
+          ],
+          "hostess": [
+            {
+              "id": 7,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T07:37:36.592Z",
+              "updatedAt": "2020-02-24T07:37:36.592Z",
+              "hostId": 20
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User2"
+        }
+      },
+      "required": [
+        "user"
+      ]
+    },
+    "User2": {
+      "title": "User2",
+      "example": {
+        "id": 20,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "wacsatop@meetup.com",
+        "isAdmin": false,
+        "createdAt": "2020-02-24T03:33:53.113Z",
+        "updatedAt": "2020-02-24T07:44:18.793Z",
+        "meetings": [
+          {
+            "id": 4,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T03:52:42.78Z",
+            "updatedAt": "2020-02-24T03:52:42.78Z",
+            "hostId": 2
+          },
+          {
+            "id": 6,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T03:54:08.382Z",
+            "updatedAt": "2020-02-24T03:54:08.382Z",
+            "hostId": 2
+          }
+        ],
+        "hostess": [
+          {
+            "id": 7,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T07:37:36.592Z",
+            "updatedAt": "2020-02-24T07:37:36.592Z",
+            "hostId": 20
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "meetings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Meeting3"
+          }
+        },
+        "hostess": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Hostess"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin",
+        "createdAt",
+        "updatedAt",
+        "meetings",
+        "hostess"
+      ]
+    },
+    "Hostess": {
+      "title": "Hostess",
+      "example": {
+        "id": 7,
+        "name": "test meeting",
+        "description": "this is a thes meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-02-24T03:33:53Z",
+        "createdAt": "2020-02-24T07:37:36.592Z",
+        "updatedAt": "2020-02-24T07:37:36.592Z",
+        "hostId": 20
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "hostId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "address",
+        "date",
+        "createdAt",
+        "updatedAt",
+        "hostId"
+      ]
+    },
+    "updateonerequest": {
+      "title": "updateonerequest",
+      "example": {
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "password": "test"
+      },
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "username",
+        "password"
+      ]
+    },
+    "updateone": {
+      "title": "updateone",
+      "example": {
+        "user": {
+          "id": 20,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "wacsatop@meetup.com",
+          "isAdmin": false,
+          "createdAt": "2020-02-24T03:33:53.113Z",
+          "updatedAt": "2020-02-24T08:00:57.392Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "required": [
+        "user"
+      ]
+    },
+    "EnrolloneinmeetingsRequest": {
+      "title": "EnrolloneinmeetingsRequest",
+      "example": {
+        "meetingIds": [
+          4
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "meetingIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "required": [
+        "meetingIds"
+      ]
+    },
+    "Enrolloneinmeetings": {
+      "title": "Enrolloneinmeetings",
+      "example": {
+        "user": {
+          "id": 20,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "wacsatop@meetup.com",
+          "isAdmin": false,
+          "password": "$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2",
+          "createdAt": "2020-02-24T03:33:53.113Z",
+          "updatedAt": "2020-02-24T07:44:18.793Z",
+          "deletedAt": null,
+          "meetings": [
+            {
+              "id": 3,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:51:15.597Z",
+              "updatedAt": "2020-02-24T03:51:15.597Z",
+              "hostId": 2
+            },
+            {
+              "id": 4,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:52:42.78Z",
+              "updatedAt": "2020-02-24T03:52:42.78Z",
+              "hostId": 2
+            },
+            {
+              "id": 6,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:54:08.382Z",
+              "updatedAt": "2020-02-24T03:54:08.382Z",
+              "hostId": 2
+            }
+          ],
+          "hostess": [
+            {
+              "id": 7,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T07:37:36.592Z",
+              "updatedAt": "2020-02-24T07:37:36.592Z",
+              "hostId": 20
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User4"
+        }
+      },
+      "required": [
+        "user"
+      ]
+    },
+    "User4": {
+      "title": "User4",
+      "example": {
+        "id": 20,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "wacsatop@meetup.com",
+        "isAdmin": false,
+        "password": "$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2",
+        "createdAt": "2020-02-24T03:33:53.113Z",
+        "updatedAt": "2020-02-24T07:44:18.793Z",
+        "deletedAt": null,
+        "meetings": [
+          {
+            "id": 3,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T03:51:15.597Z",
+            "updatedAt": "2020-02-24T03:51:15.597Z",
+            "hostId": 2
+          },
+          {
+            "id": 4,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T03:52:42.78Z",
+            "updatedAt": "2020-02-24T03:52:42.78Z",
+            "hostId": 2
+          },
+          {
+            "id": 6,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T03:54:08.382Z",
+            "updatedAt": "2020-02-24T03:54:08.382Z",
+            "hostId": 2
+          }
+        ],
+        "hostess": [
+          {
+            "id": 7,
+            "name": "test meeting",
+            "description": "this is a thes meeting",
+            "address": "Buenavista 150, col. agricola oriental",
+            "date": "2020-02-24T03:33:53Z",
+            "createdAt": "2020-02-24T07:37:36.592Z",
+            "updatedAt": "2020-02-24T07:37:36.592Z",
+            "hostId": 20
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "password": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "meetings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Meeting3"
+          }
+        },
+        "hostess": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Hostess"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin",
+        "password",
+        "createdAt",
+        "updatedAt",
+        "deletedAt",
+        "meetings",
+        "hostess"
+      ]
+    },
+    "LeaveMeetingsRequest": {
+      "title": "LeaveMeetingsRequest",
+      "example": {
+        "meetingIds": [
+          3
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "meetingIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "required": [
+        "meetingIds"
+      ]
+    },
+    "LeaveMeetings": {
+      "title": "LeaveMeetings",
+      "example": {
+        "user": {
+          "id": 20,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "wacsatop@meetup.com",
+          "isAdmin": false,
+          "password": "$2b$08$CBicH8D1L/G.QDJ9MApJPOms7M.0m.HmRizp4To.inlMlcOidhfB2",
+          "createdAt": "2020-02-24T03:33:53.113Z",
+          "updatedAt": "2020-02-24T07:44:18.793Z",
+          "deletedAt": null,
+          "meetings": [
+            {
+              "id": 4,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:52:42.78Z",
+              "updatedAt": "2020-02-24T03:52:42.78Z",
+              "hostId": 2
+            },
+            {
+              "id": 6,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T03:54:08.382Z",
+              "updatedAt": "2020-02-24T03:54:08.382Z",
+              "hostId": 2
+            }
+          ],
+          "hostess": [
+            {
+              "id": 7,
+              "name": "test meeting",
+              "description": "this is a thes meeting",
+              "address": "Buenavista 150, col. agricola oriental",
+              "date": "2020-02-24T03:33:53Z",
+              "createdAt": "2020-02-24T07:37:36.592Z",
+              "updatedAt": "2020-02-24T07:37:36.592Z",
+              "hostId": 20
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User4"
+        }
+      },
+      "required": [
+        "user"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "public"
+    },
+    {
+      "name": "Meeting",
+      "description": "This is the section for meetings, you can create, list, detail, update and delete meetings\nyou need a token for this sub section (you can go to public/login for one)\nThere are some rules that are depending of the specific endpoint, and they are mentioned in the certain endpoint"
+    },
+    {
+      "name": "user",
+      "description": "This is the section for users, you can create, list, detail, update, enrole to meeting, leave a meeting and delete users\nyou need a token for this sub section (you can go to public/login for one)\n\nThere are some rules that are depending of the specific endpoint, and they are mentioned in the certain endpoint"
+    }
+  ]
+}
