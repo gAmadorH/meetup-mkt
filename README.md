@@ -2,6 +2,11 @@
 
 una aplicacion de meetup hecha en casa in-house
 
+## requirements
+
+* node
+* npm
+
 ## install
 
 Clona e instala dependencias
