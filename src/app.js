@@ -1,5 +1,6 @@
 const config = require('config')
 const fastify = require('fastify')
+const path = require('path')
 
 const {
   environment,
@@ -15,6 +16,11 @@ app.register(require('fastify-chalk'))
 app.register(require('fastify-graceful-shutdown'))
 app.register(require('fastify-jwt'), { secret: jwtSecret })
 app.register(require('fastify-sensible'))
+app.register(require('fastify-static'), {
+  root: path.join(__dirname, '../docs/'),
+  redirect: true,
+  prefix: '/docs'
+})
 
 app.after((err) => {
   if (err) {
