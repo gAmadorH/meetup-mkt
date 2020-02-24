@@ -11,15 +11,17 @@ function onClose(app, done) {
   })
 }
 
-function pg(app, options, done) {
+async function pg(app, options) {
   const { url, params } = options.database
   let sequelize = null
 
   try {
     sequelize = new Sequelize(url, params)
+
+    await sequelize.authenticate()
   } catch (err) {
     app.log.error('DATABASE\t\t[%s]', app.chalk.red('error'))
-    done(err)
+    throw err
   }
 
   app.decorate('sequelize', sequelize)
@@ -29,7 +31,6 @@ function pg(app, options, done) {
   app.addHook('onClose', onClose)
 
   app.log.info('DATABASE\t\t[%s]', app.chalk.magenta('ready'))
-  done()
 }
 
 module.exports = fp(pg, {
