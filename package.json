@@ -8,6 +8,10 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint src/*",
     "lint:fix": "eslint src/* --fix",
+    "db:postgres": "node i -S pg pg-hstore",
+    "db:mariadb": "node i -S mariadb",
+    "db:mysql": "node i -S mysql2",
+    "db:mssql": "node i -S tedious",
     "db:sync": "node utils/sync-db.js",
     "db:seed:user": "node utils/user-mocks.js"
   },
@@ -47,8 +51,6 @@
     "fastify-static": "^2.6.0",
     "inquirer": "^7.0.4",
     "joi": "^14.3.1",
-    "pg": "^7.18.1",
-    "pg-hstore": "^2.3.3",
     "pino-pretty": "^3.6.0",
     "sequelize": "^5.21.4"
   }
