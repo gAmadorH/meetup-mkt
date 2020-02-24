@@ -2,19 +2,22 @@ const fs = require('fs')
 const fp = require('fastify-plugin')
 const path = require('path')
 
-function fastifyModels(fastify, _options, done) {
-  const modelsPath = path.join(__dirname, 'models')
+function pg(fastify, _options, done) {
   const db = {}
 
   try {
-    fs.readdirSync(modelsPath).forEach((file) => {
-      const model = fastify.sequelize.import(path.join(modelsPath, file))
+    const pathModels = path.join(__dirname, 'models')
+
+    fs.readdirSync(pathModels).forEach((file) => {
+      const pathFile = path.join(pathModels, file)
+      const model = fastify.sequelize.import(pathFile)
+
       db[model.name] = model
 
-      fastify.log.debug(' %s\t%s', fastify.chalk.magenta('import'), model.name)
+      fastify.log.debug('%s\t\t%s', 'import', model.name)
     })
   } catch (err) {
-    fastify.log.error('MODELS\t[%s]', fastify.chalk.red('error'))
+    fastify.log.error('MODELS\t\t[%s]', fastify.chalk.red('error'))
     done(err)
   }
 
@@ -26,7 +29,7 @@ function fastifyModels(fastify, _options, done) {
   done()
 }
 
-module.exports = fp(fastifyModels, {
+module.exports = fp(pg, {
   fastify: '>=0.13.1',
   decorators: {
     fastify: ['chalk']
