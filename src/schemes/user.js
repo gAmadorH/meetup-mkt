@@ -7,22 +7,22 @@ const addOne = {
     properties: {
       firstName: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 50
       },
       lastName: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 50
       },
       username: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 50
       },
       email: {
         type: 'string',
-        minLength: 10,
+        minLength: 5,
         maxLength: 50
       },
       isAdmin: {
@@ -31,7 +31,7 @@ const addOne = {
       },
       password: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 100
       }
     }
@@ -95,22 +95,22 @@ const updateOne = {
     properties: {
       firstName: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 50
       },
       lastName: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 50
       },
       username: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 50
       },
       password: {
         type: 'string',
-        minLength: 10,
+        minLength: 3,
         maxLength: 100
       }
     }

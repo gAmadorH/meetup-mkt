@@ -18,7 +18,7 @@ function authorization(request, _reply, done) {
   const { user } = request
   const { user: userAuth } = request.auth
 
-  if (userAuth.isAdmin || (userAuth.hostId === user.id)) {
+  if (userAuth.isAdmin || (userAuth.id === user.id)) {
     done()
   } else {
     done(this.httpErrors.forbidden())

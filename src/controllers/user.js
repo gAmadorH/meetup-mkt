@@ -18,6 +18,11 @@ function addOne(request, reply) {
     isAdmin,
     password
   }).then((user) => {
+    /* eslint-disable no-param-reassign */
+    user = user.get({ plain: true })
+    delete user.password
+    delete user.deletedAt
+
     reply.send({ user })
   })
 }
@@ -50,11 +55,21 @@ function getOne(request, reply) {
   const { id } = request.params
 
   User.findByPk(id, {
-    include: {
+    include: [{
       model: Meeting,
+      as: 'meetings',
+      attributes: { exclude: ['deletedAt'] },
       through: { attributes: [] }
-    }
+    }, {
+      model: Meeting,
+      as: 'hostess',
+      attributes: { exclude: ['deletedAt'] }
+    }]
   }).then((user) => {
+    user = user.get({ plain: true })
+    delete user.password
+    delete user.deletedAt
+
     reply.send({ user })
   })
 }
@@ -82,6 +97,10 @@ function updateOne(request, reply) {
   }, { where: { id } })
     .then(() => User.findByPk(id))
     .then((user) => {
+      user = user.get({ plain: true })
+      delete user.password
+      delete user.deletedAt
+
       reply.send({ user })
     })
 }
@@ -95,10 +114,16 @@ function enrollOne(request, reply) {
   User.findByPk(id)
     .then((user) => user.addMeetings(meetingIds))
     .then(() => User.findByPk(id, {
-      include: {
+      include: [{
         model: Meeting,
+        as: 'meetings',
+        attributes: { exclude: ['deletedAt'] },
         through: { attributes: [] }
-      }
+      }, {
+        model: Meeting,
+        as: 'hostess',
+        attributes: { exclude: ['deletedAt'] }
+      }]
     }))
     .then((user) => {
       reply.send({ user })
@@ -114,10 +139,16 @@ function unenrollOne(request, reply) {
   User.findByPk(id)
     .then((user) => user.removeMeetings(meetingIds))
     .then(() => User.findByPk(id, {
-      include: {
+      include: [{
         model: Meeting,
+        as: 'meetings',
+        attributes: { exclude: ['deletedAt'] },
         through: { attributes: [] }
-      }
+      }, {
+        model: Meeting,
+        as: 'hostess',
+        attributes: { exclude: ['deletedAt'] }
+      }]
     }))
     .then((user) => {
       reply.send({ user })
