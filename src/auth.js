@@ -5,7 +5,9 @@ function auth(request, _reply, done) {
     if (err) {
       done(this.httpErrors.unauthorized(err.message))
     } else {
-      request.auth.user = decoded.user
+      request.auth = {
+        user: decoded.user
+      }
       done()
     }
   })
