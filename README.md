@@ -122,3 +122,39 @@ la docuementacion tambien esta en estre projecto
 ## test
 
 puedes usar la coleccion de postman que esta en el `postman/meetup mkt.postman_collection.js` para realizar  pruebas
+
+1. puedes empezar por crear un usuario en: 
+
+POST http://157.245.143.235:3000/api/users
+
+con el siguiente body:
+
+```
+{
+	"firstName": "test",
+	"lastName": "test",
+	"username": "test",
+	"email": "test@test.com",
+	"isAdmin": true,
+	"password": "test"
+}
+```
+
+recuerda si decides hacerlo `admin` entonces este usuario tendra acceso a modificar cualquier contenido
+
+2. ahora debes hacer login con las credenciales de tu nuevo usuario en:
+
+POST http://157.245.143.235:3000/api/auth/login
+
+con el siguiente body:
+
+```
+{
+	"email": "wacsatop@meetup.com",
+	"password": "test"
+}
+```
+
+3. Despues de hacer estos dos primeros pasos, ya puedes probar como gustes los endpoints que se encuentran en:
+
+[http://157.245.143.235:3000/docs](http://157.245.143.235:3000/docs)
