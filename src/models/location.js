@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Location.associate = (models) => {
-    Location.belongsTo(models.Meeting, { foreignKey: 'meetingId' })
+    Location.belongsTo(models.Meeting, { as: 'location', foreignKey: 'meetingId' })
   }
 
   return Location
