@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   Meeting.associate = (models) => {
     Meeting.belongsToMany(models.User, { as: 'participants', through: models.MeetingUsers })
     Meeting.belongsTo(models.User, { as: 'host', foreignKey: 'hostId' })
+    Meeting.hasOne(models.Location, { as: 'meeting', foreignKey: 'meetingId' })
   }
 
   return Meeting
