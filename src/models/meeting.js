@@ -14,10 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT
     },
-    address: {
-      allowNull: false,
-      type: DataTypes.TEXT
-    },
     date: {
       allowNull: false,
       type: DataTypes.DATE
@@ -29,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   Meeting.associate = (models) => {
     Meeting.belongsToMany(models.User, { as: 'participants', through: models.MeetingUsers })
     Meeting.belongsTo(models.User, { as: 'host', foreignKey: 'hostId' })
-    Meeting.hasOne(models.Location, { as: 'meeting', foreignKey: 'meetingId' })
+    Meeting.hasOne(models.Location, { foreignKey: 'meetingId' })
   }
 
   return Meeting

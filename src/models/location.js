@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(50)
     },
-    description: {
+    reference: {
       allowNull: false,
       type: DataTypes.TEXT
     }
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Location.associate = (models) => {
-    Location.belongsTo(models.Meeting, { as: 'meeting', foreignKey: 'meetingId' })
+    Location.belongsTo(models.Meeting, { foreignKey: 'meetingId' })
   }
 
   return Location
