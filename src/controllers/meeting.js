@@ -1,23 +1,54 @@
 // add one
 function addOne(request, reply) {
-  const { Meeting } = this.sequelize.models
+  const { User, Meeting, Location } = this.sequelize.models
+  const { user } = request.auth
   const {
     name,
     description,
-    address,
-    date
+    date,
+    location: {
+      country,
+      state,
+      city,
+      street,
+      number,
+      reference
+    }
   } = request.body
-  const { user } = request.auth
 
   Meeting.create({
     name,
     description,
-    address,
     date,
-    hostId: user.id
-  }).then((meeting) => {
-    reply.send({ meeting })
-  })
+    hostId: user.id,
+    location: {
+      country,
+      state,
+      city,
+      street,
+      number,
+      reference
+    }
+  }, {
+    include: {
+      model: Location,
+      as: 'location'
+    }
+  }).then((meeting) => Meeting.findByPk(meeting.id, {
+    attributes: { exclude: ['hostId', 'deletedAt'] },
+    include: [{
+      model: User,
+      as: 'host',
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'deletedAt'] }
+    }, {
+      model: Location,
+      as: 'location',
+      attributes: { exclude: ['id', 'meetingId'] }
+    }]
+  }))
+    .then((meeting) => {
+      reply.send({ meeting })
+    })
 }
 
 // get all

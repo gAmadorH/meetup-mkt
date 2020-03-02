@@ -3,7 +3,7 @@ const addOne = {
   body: {
     type: 'object',
     additionalProperties: false,
-    required: ['name', 'description', 'address', 'date'],
+    required: ['name', 'description', 'date', 'location'],
     properties: {
       name: {
         type: 'string',
@@ -13,11 +13,33 @@ const addOne = {
       description: {
         type: 'string'
       },
-      address: {
-        type: 'string'
-      },
       date: {
         type: 'string'
+      },
+      location: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['country', 'state', 'city', 'street', 'number'],
+        properties: {
+          country: {
+            type: 'string'
+          },
+          state: {
+            type: 'string'
+          },
+          city: {
+            type: 'string'
+          },
+          street: {
+            type: 'string'
+          },
+          number: {
+            type: 'string'
+          },
+          reference: {
+            type: 'string'
+          }
+        }
       }
     }
   }
