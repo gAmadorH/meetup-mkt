@@ -53,7 +53,7 @@ function addOne(request, reply) {
 
 // get all
 function getAll(request, reply) {
-  const { User, Meeting } = this.sequelize.models
+  const { User, Meeting, Location } = this.sequelize.models
   const {
     limit,
     step,
@@ -61,18 +61,34 @@ function getAll(request, reply) {
     order
   } = request.query
 
+  const [alias, subOrderBy] = orderBy.split('.')
+  const orderQuery = []
+  const aliasToModel = {
+    location: Location,
+    host: User
+  }
+
+  if (subOrderBy) {
+    orderQuery.push([{ model: aliasToModel[alias], as: alias }, subOrderBy, order])
+  } else {
+    orderQuery.push([orderBy, order])
+  }
+
   Meeting.findAndCountAll({
     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-    include: {
+    include: [{
       model: User,
-      as: 'participants',
-      attributes: { exclude: ['password', 'isAdmin', 'createdAt', 'updatedAt', 'deletedAt'] },
-      through: { attributes: [] }
-    },
+      as: 'host',
+      attributes: { exclude: ['password', 'isAdmin', 'createdAt', 'updatedAt', 'deletedAt'] }
+    }, {
+      model: Location,
+      as: 'location',
+      attributes: { exclude: ['id', 'meetingId'] }
+    }],
     distinct: true,
     limit,
     offset: (step - 1) * limit,
-    order: [[orderBy, order]]
+    order: orderQuery
   }).then(({ rows: meetings, count: total }) => {
     const steps = Math.ceil(total / limit)
 

@@ -63,12 +63,23 @@ const getAll = {
         minimum: 1
       },
       orderBy: {
-        enum: ['id', 'name', 'description', 'address', 'date'],
+        enum: [
+          'id',
+          'name',
+          'description',
+          'date',
+          'location.country',
+          'location.state',
+          'location.city',
+          'location.street',
+          'location.number',
+          'location.reference'
+        ],
         default: 'id'
       },
       order: {
         enum: ['DESC', 'ASC'],
-        default: 'ASC'
+        default: 'DESC'
       }
     }
   }
