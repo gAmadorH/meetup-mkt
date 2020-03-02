@@ -98,20 +98,24 @@ function getAll(request, reply) {
 
 // get one
 function getOne(request, reply) {
-  const { User, Meeting } = this.sequelize.models
+  const { User, Meeting, Location } = this.sequelize.models
   const { id } = request.params
 
   Meeting.findByPk(id, {
     attributes: { exclude: ['hostId', 'deletedAt'] },
     include: [{
       model: User,
+      as: 'host',
+      attributes: { exclude: ['password', 'deletedAt'] }
+    }, {
+      model: Location,
+      as: 'location',
+      attributes: { exclude: ['id', 'meetingId'] }
+    }, {
+      model: User,
       as: 'participants',
       attributes: { exclude: ['password', 'deletedAt'] },
       through: { attributes: [] }
-    }, {
-      model: User,
-      as: 'host',
-      attributes: { exclude: ['password', 'deletedAt'] }
     }]
   }).then((meeting) => {
     reply.send({ meeting })
