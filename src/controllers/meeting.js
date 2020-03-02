@@ -124,27 +124,47 @@ function getOne(request, reply) {
 
 // update one
 function updateOne(request, reply) {
-  const { Meeting } = this.sequelize.models
+  const { User, Meeting, Location } = this.sequelize.models
   const { id } = request.params
   const {
     name,
     description,
-    address,
-    date
+    date,
+    location: {
+      country,
+      state,
+      city,
+      street,
+      number,
+      reference
+    }
   } = request.body
 
   Meeting.update({
     name,
     description,
-    address,
     date
   }, {
     where: { id }
+  }).then(() => Location.update({
+    country,
+    state,
+    city,
+    street,
+    number,
+    reference
+  }, {
+    where: { meetingId: id }
+  })).then(() => Meeting.findByPk(id, {
+    attributes: { exclude: ['deletedAt'] },
+    include: [{
+      model: Location,
+      as: 'location',
+      attributes: { exclude: ['id', 'meetingId'] }
+    }]
+  })).then((meeting) => {
+    reply.send({ meeting })
   })
-    .then(() => Meeting.findByPk(id, { attributes: { exclude: ['deletedAt'] } }))
-    .then((meeting) => {
-      reply.send({ meeting })
-    })
 }
 
 // delete one

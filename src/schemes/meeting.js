@@ -119,11 +119,37 @@ const updateOne = {
       description: {
         type: 'string'
       },
-      address: {
-        type: 'string'
-      },
       date: {
         type: 'string'
+      },
+      location: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          country: {
+            type: 'string',
+            minLength: 1
+          },
+          state: {
+            type: 'string',
+            minLength: 1
+          },
+          city: {
+            type: 'string',
+            minLength: 1
+          },
+          street: {
+            type: 'string',
+            minLength: 1
+          },
+          number: {
+            type: 'string',
+            minLength: 1
+          },
+          reference: {
+            type: 'string'
+          }
+        }
       }
     }
   }
