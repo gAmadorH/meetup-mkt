@@ -124,7 +124,7 @@ function getOne(request, reply) {
 
 // update one
 function updateOne(request, reply) {
-  const { User, Meeting, Location } = this.sequelize.models
+  const { Meeting, Location } = this.sequelize.models
   const { id } = request.params
   const {
     name,
