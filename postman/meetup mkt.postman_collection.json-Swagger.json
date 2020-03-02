@@ -53,7 +53,45 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "schema": {
+              "$ref": "#/definitions/login"
+            },
+            "examples": {
+              "application/json": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNTgzMTI1MDExLCJleHAiOjE1ODMxMjYyMTF9.mOcS0DtgYP6oPBk_1FVtilz1_D4S1Sw_q_07DQXujp8"
+              }
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "161"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 02 Mar 2020 04:56:51 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/loginwithwrongpassword"
+            },
+            "examples": {
+              "application/json": {
+                "statusCode": 401,
+                "error": "Unauthorized",
+                "message": "Unauthorized"
+              }
+            }
           }
         }
       }
@@ -95,20 +133,33 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Createameeting"
+              "$ref": "#/definitions/Createameeting2"
             },
             "examples": {
               "application/json": {
                 "meeting": {
-                  "id": 6,
-                  "name": "test meeting",
-                  "description": "this is a thes meeting",
-                  "address": "Buenavista 150, col. agricola oriental",
+                  "id": 5,
+                  "name": "Test Meeting 3",
+                  "description": "This is my Test Meeting",
                   "date": "2020-02-24T03:33:53Z",
-                  "hostId": 2,
-                  "updatedAt": "2020-02-24T03:54:08.382Z",
-                  "createdAt": "2020-02-24T03:54:08.382Z",
-                  "deletedAt": null
+                  "createdAt": "2020-03-02T05:07:06.39Z",
+                  "updatedAt": "2020-03-02T05:07:06.39Z",
+                  "host": {
+                    "id": 1,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true
+                  },
+                  "location": {
+                    "country": "Denmark",
+                    "state": "Copenhagen",
+                    "city": "Copenhagen",
+                    "street": "Den",
+                    "number": "100",
+                    "reference": null
+                  }
                 }
               }
             },
@@ -119,11 +170,11 @@
               },
               "content-length": {
                 "type": "string",
-                "default": "272"
+                "default": "427"
               },
               "Date": {
                 "type": "string",
-                "default": "Mon, 24 Feb 2020 03:54:08 GMT"
+                "default": "Mon, 02 Mar 2020 05:07:06 GMT"
               },
               "Connection": {
                 "type": "string",
@@ -151,7 +202,7 @@
             "required": true,
             "type": "integer",
             "format": "int32",
-            "description": "Limit of the page (default: 10)"
+            "description": "Limit (default 10)"
           },
           {
             "name": "step",
@@ -159,21 +210,21 @@
             "required": true,
             "type": "integer",
             "format": "int32",
-            "description": "Number of the page (default: 1)"
+            "description": "Page (default 1)"
           },
           {
             "name": "orderBy",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "Order by field ['id', 'name', 'description', 'address', 'date']  (default: id)"
+            "description": "Order  by id, name, description, date, location.country, location.state, location.city, location.street, location.number  (default id)"
           },
           {
             "name": "order",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "Direction of the order  ['DESC', 'ASC']  (default: ASC)"
+            "description": "Order  DESC or ASC  (default DESC)"
           }
         ],
         "responses": {
@@ -184,115 +235,74 @@
             },
             "examples": {
               "application/json": {
-                "total": 6,
+                "total": 3,
                 "steps": 1,
                 "meetings": [
                   {
-                    "id": 1,
-                    "name": "test meeting",
-                    "description": "this is a thes meeting",
-                    "address": "Buenavista 150, col. agricola oriental",
-                    "date": "2020-02-24T03:33:53Z",
-                    "hostId": 2,
-                    "participants": [
-                      {
-                        "id": 31,
-                        "firstName": "Glen",
-                        "lastName": "Benini",
-                        "username": "jarren",
-                        "email": "metserdin@meetup.com"
-                      },
-                      {
-                        "id": 32,
-                        "firstName": "Cory",
-                        "lastName": "Iqbal",
-                        "username": "awilofuki",
-                        "email": "uppal@meetup.com"
-                      },
-                      {
-                        "id": 33,
-                        "firstName": "Jeanette",
-                        "lastName": "Puccini",
-                        "username": "kob",
-                        "email": "vuwvaci@meetup.com"
-                      }
-                    ]
-                  },
-                  {
                     "id": 2,
-                    "name": "test meeting",
-                    "description": "this is a thes meeting",
-                    "address": "Buenavista 150, col. agricola oriental",
+                    "name": "Test Meeting 2",
+                    "description": "This is my second Test Meeting",
                     "date": "2020-02-24T03:33:53Z",
-                    "hostId": 2,
-                    "participants": [
-                      {
-                        "id": 34,
-                        "firstName": "Lola",
-                        "lastName": "Hill",
-                        "username": "nil",
-                        "email": "ubufuik@meetup.com"
-                      }
-                    ]
+                    "hostId": 1,
+                    "host": {
+                      "id": 1,
+                      "firstName": "test",
+                      "lastName": "test",
+                      "username": "test",
+                      "email": "test@test.com"
+                    },
+                    "location": {
+                      "country": "Mexico",
+                      "state": "Jalisco",
+                      "city": "Guadalajara",
+                      "street": "Buenavista",
+                      "number": "35",
+                      "reference": "Frente al Costo"
+                    }
                   },
                   {
-                    "id": 3,
-                    "name": "test meeting",
-                    "description": "this is a thes meeting",
-                    "address": "Buenavista 150, col. agricola oriental",
+                    "id": 1,
+                    "name": "Test Meeting",
+                    "description": "This is my first Test Meeting",
                     "date": "2020-02-24T03:33:53Z",
-                    "hostId": 2,
-                    "participants": []
-                  },
-                  {
-                    "id": 4,
-                    "name": "test meeting",
-                    "description": "this is a thes meeting",
-                    "address": "Buenavista 150, col. agricola oriental",
-                    "date": "2020-02-24T03:33:53Z",
-                    "hostId": 2,
-                    "participants": []
+                    "hostId": 1,
+                    "host": {
+                      "id": 1,
+                      "firstName": "test",
+                      "lastName": "test",
+                      "username": "test",
+                      "email": "test@test.com"
+                    },
+                    "location": {
+                      "country": "Mexico",
+                      "state": "Jalisco",
+                      "city": "Guadalajara",
+                      "street": "Buenavista",
+                      "number": "35",
+                      "reference": "Frente al Costo"
+                    }
                   },
                   {
                     "id": 5,
-                    "name": "test updated meeting",
-                    "description": "this is a thes updated meeting",
-                    "address": "Buenavista 150, col. agricola oriental",
-                    "date": "2020-03-24T03:33:53Z",
-                    "hostId": 2,
-                    "participants": [
-                      {
-                        "id": 30,
-                        "firstName": "Adeline",
-                        "lastName": "Obrien",
-                        "username": "deof",
-                        "email": "fa@meetup.com"
-                      }
-                    ]
-                  },
-                  {
-                    "id": 6,
-                    "name": "test meeting",
-                    "description": "this is a thes meeting",
-                    "address": "Buenavista 150, col. agricola oriental",
+                    "name": "Test Meeting 3",
+                    "description": "This is my Test Meeting",
                     "date": "2020-02-24T03:33:53Z",
-                    "hostId": 2,
-                    "participants": [
-                      {
-                        "id": 20,
-                        "firstName": "Alejandro",
-                        "lastName": "Tucker",
-                        "username": "oboeduki",
-                        "email": "wacsatop@meetup.com"
-                      },
-                      {
-                        "id": 21,
-                        "firstName": "Daisy",
-                        "lastName": "Cianchi",
-                        "username": "ta",
-                        "email": "gutiz@meetup.com"
-                      }
-                    ]
+                    "hostId": 1,
+                    "host": {
+                      "id": 1,
+                      "firstName": "test",
+                      "lastName": "test",
+                      "username": "test",
+                      "email": "test@test.com"
+                    },
+                    "location": {
+                      "country": "Denmark",
+                      "state": "Copenhagen",
+                      "city": "Copenhagen",
+                      "street": "Den",
+                      "number": "100",
+                      "reference": null
+                    }
                   }
                 ]
               }
@@ -304,11 +314,11 @@
               },
               "content-length": {
                 "type": "string",
-                "default": "1835"
+                "default": "1079"
               },
               "Date": {
                 "type": "string",
-                "default": "Mon, 24 Feb 2020 04:35:00 GMT"
+                "default": "Mon, 02 Mar 2020 05:09:45 GMT"
               },
               "Connection": {
                 "type": "string",
@@ -319,7 +329,7 @@
         }
       }
     },
-    "/meetings/1": {
+    "/meetings/{id}": {
       "get": {
         "description": "List all meetings with id, name, description, address, date, createdAt, updatedAt and  a participants list with some information such as: id, firstName, lastName, username, email, isAdmin, createdAt, updatedAt.\nAnd host information like: id, firstName, lastName, username, email, isAdmin, createdAt, updatedAt\n       ",
         "summary": "Detail a meeting",
@@ -331,65 +341,49 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/detailameeting"
+              "$ref": "#/definitions/Detailonemeeting"
             },
             "examples": {
               "application/json": {
                 "meeting": {
                   "id": 1,
-                  "name": "test meeting",
-                  "description": "this is a thes meeting",
-                  "address": "Buenavista 150, col. agricola oriental",
+                  "name": "Test Meeting",
+                  "description": "This is my first Test Meeting",
                   "date": "2020-02-24T03:33:53Z",
-                  "createdAt": "2020-02-24T03:48:44.984Z",
-                  "updatedAt": "2020-02-24T03:48:44.984Z",
-                  "participants": [
-                    {
-                      "id": 31,
-                      "firstName": "Glen",
-                      "lastName": "Benini",
-                      "username": "jarren",
-                      "email": "metserdin@meetup.com",
-                      "isAdmin": false,
-                      "createdAt": "2020-02-24T03:33:53.113Z",
-                      "updatedAt": "2020-02-24T03:33:53.113Z"
-                    },
-                    {
-                      "id": 32,
-                      "firstName": "Cory",
-                      "lastName": "Iqbal",
-                      "username": "awilofuki",
-                      "email": "uppal@meetup.com",
-                      "isAdmin": true,
-                      "createdAt": "2020-02-24T03:33:53.113Z",
-                      "updatedAt": "2020-02-24T03:33:53.113Z"
-                    },
-                    {
-                      "id": 33,
-                      "firstName": "Jeanette",
-                      "lastName": "Puccini",
-                      "username": "kob",
-                      "email": "vuwvaci@meetup.com",
-                      "isAdmin": true,
-                      "createdAt": "2020-02-24T03:33:53.113Z",
-                      "updatedAt": "2020-02-24T03:33:53.113Z"
-                    }
-                  ],
+                  "createdAt": "2020-03-02T04:59:47.765Z",
+                  "updatedAt": "2020-03-02T04:59:47.765Z",
                   "host": {
-                    "id": 2,
-                    "firstName": "Gavin",
-                    "lastName": "Browne",
-                    "username": "hegkazco",
-                    "email": "jodoj@meetup.com",
-                    "isAdmin": false,
-                    "createdAt": "2020-02-24T03:33:53.113Z",
-                    "updatedAt": "2020-02-24T03:33:53.113Z"
-                  }
+                    "id": 1,
+                    "firstName": "test",
+                    "lastName": "test",
+                    "username": "test",
+                    "email": "test@test.com",
+                    "isAdmin": true,
+                    "createdAt": "2020-03-02T04:54:35.98Z",
+                    "updatedAt": "2020-03-02T04:54:35.98Z"
+                  },
+                  "location": {
+                    "country": "Mexico",
+                    "state": "Jalisco",
+                    "city": "Guadalajara",
+                    "street": "Buenavista",
+                    "number": "35",
+                    "reference": "Frente al Costo"
+                  },
+                  "participants": []
                 }
               }
             },
@@ -400,11 +394,11 @@
               },
               "content-length": {
                 "type": "string",
-                "default": "1038"
+                "default": "543"
               },
               "Date": {
                 "type": "string",
-                "default": "Mon, 24 Feb 2020 04:47:44 GMT"
+                "default": "Mon, 02 Mar 2020 05:11:03 GMT"
               },
               "Connection": {
                 "type": "string",
@@ -414,50 +408,6 @@
           }
         }
       },
-      "delete": {
-        "description": "Delete a meeting.\nthere are 2 rules in this endpoint:\n1. Only the host user can delete the meeting\n2. Admin user can delete the meeting without be the host",
-        "summary": "Delete a meeting",
-        "tags": [
-          "Meeting"
-        ],
-        "operationId": "Deleteameeting",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "object"
-            },
-            "examples": {
-              "application/json": {}
-            },
-            "headers": {
-              "content-type": {
-                "type": "string",
-                "default": "application/json; charset=utf-8"
-              },
-              "content-length": {
-                "type": "string",
-                "default": "2"
-              },
-              "Date": {
-                "type": "string",
-                "default": "Mon, 24 Feb 2020 04:56:47 GMT"
-              },
-              "Connection": {
-                "type": "string",
-                "default": "keep-alive"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/meetings/5": {
       "put": {
         "description": "Update a meeting, name, description, address and date.\nthere are 2 rules in this endpoint:\n1. Only the host user can update the meeting\n2. Admin user can update the meeting without be the host",
         "summary": "Update a meeting",
@@ -488,6 +438,13 @@
             "schema": {
               "$ref": "#/definitions/UpdateameetingRequest"
             }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
@@ -499,14 +456,21 @@
             "examples": {
               "application/json": {
                 "meeting": {
-                  "id": 5,
-                  "name": "test updated meeting",
-                  "description": "this is a thes updated meeting",
-                  "address": "Buenavista 150, col. agricola oriental",
-                  "date": "2020-03-24T03:33:53Z",
-                  "createdAt": "2020-02-24T03:52:47.623Z",
-                  "updatedAt": "2020-02-24T04:54:47.609Z",
-                  "hostId": 2
+                  "id": 1,
+                  "name": "Test updated Meeting",
+                  "description": "This is my first Test Meeting",
+                  "date": "2020-03-11T03:33:53Z",
+                  "createdAt": "2020-03-02T04:59:47.765Z",
+                  "updatedAt": "2020-03-02T05:14:22.429Z",
+                  "hostId": 1,
+                  "location": {
+                    "country": "Mexico",
+                    "state": "Jalisco",
+                    "city": "Guadalajara",
+                    "street": "Buenavista",
+                    "number": "1000",
+                    "reference": "Frente al Costo"
+                  }
                 }
               }
             },
@@ -517,11 +481,61 @@
               },
               "content-length": {
                 "type": "string",
-                "default": "271"
+                "default": "358"
               },
               "Date": {
                 "type": "string",
-                "default": "Mon, 24 Feb 2020 04:54:47 GMT"
+                "default": "Mon, 02 Mar 2020 05:14:23 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a meeting.\nthere are 2 rules in this endpoint:\n1. Only the host user can delete the meeting\n2. Admin user can delete the meeting without be the host",
+        "summary": "Delete a meeting",
+        "tags": [
+          "Meeting"
+        ],
+        "operationId": "Deleteameeting",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            },
+            "examples": {
+              "application/json": {}
+            },
+            "headers": {
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "2"
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 02 Mar 2020 05:15:31 GMT"
               },
               "Connection": {
                 "type": "string",
@@ -569,19 +583,19 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Createauser"
+              "$ref": "#/definitions/Createanotadminuser"
             },
             "examples": {
               "application/json": {
                 "user": {
-                  "id": 54,
+                  "id": 2,
                   "firstName": "test",
                   "lastName": "test",
                   "username": "test",
                   "email": "test@test.com",
-                  "isAdmin": true,
-                  "updatedAt": "2020-02-24T06:35:42.099Z",
-                  "createdAt": "2020-02-24T06:35:42.099Z"
+                  "isAdmin": false,
+                  "updatedAt": "2020-03-02T04:55:17.735Z",
+                  "createdAt": "2020-03-02T04:55:17.735Z"
                 }
               }
             },
@@ -596,7 +610,7 @@
               },
               "Date": {
                 "type": "string",
-                "default": "Mon, 24 Feb 2020 06:35:42 GMT"
+                "default": "Mon, 02 Mar 2020 04:55:17 GMT"
               },
               "Connection": {
                 "type": "string",
@@ -765,7 +779,7 @@
         }
       }
     },
-    "/users/20": {
+    "/users/{id}": {
       "get": {
         "description": "get one user",
         "summary": "Detail a user",
@@ -777,7 +791,15 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -883,6 +905,13 @@
             "schema": {
               "$ref": "#/definitions/updateonerequest"
             }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
@@ -925,9 +954,36 @@
             }
           }
         }
+      },
+      "delete": {
+        "description": "delete one user",
+        "summary": "delete one",
+        "tags": [
+          "user"
+        ],
+        "operationId": "deleteone",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
       }
     },
-    "/users/20/meeting": {
+    "/users/{id}/meeting": {
       "put": {
         "description": "enroll one user in an event",
         "summary": "Enroll one in meetings",
@@ -958,6 +1014,13 @@
             "schema": {
               "$ref": "#/definitions/EnrolloneinmeetingsRequest"
             }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
@@ -1077,6 +1140,13 @@
             "schema": {
               "$ref": "#/definitions/LeaveMeetingsRequest"
             }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
@@ -1156,34 +1226,13 @@
           }
         }
       }
-    },
-    "/users/1": {
-      "delete": {
-        "description": "delete one user",
-        "summary": "delete one",
-        "tags": [
-          "user"
-        ],
-        "operationId": "deleteone",
-        "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        }
-      }
     }
   },
   "definitions": {
     "loginrequest": {
       "title": "loginrequest",
       "example": {
-        "email": "wacsatop@meetup.com",
+        "email": "test@test.com",
         "password": "test"
       },
       "type": "object",
@@ -1200,13 +1249,61 @@
         "password"
       ]
     },
+    "loginwithwrongpassword": {
+      "title": "loginwithwrongpassword",
+      "example": {
+        "statusCode": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized"
+      },
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "statusCode",
+        "error",
+        "message"
+      ]
+    },
+    "login": {
+      "title": "login",
+      "example": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxfSwiaWF0IjoxNTgzMTI1MDExLCJleHAiOjE1ODMxMjYyMTF9.mOcS0DtgYP6oPBk_1FVtilz1_D4S1Sw_q_07DQXujp8"
+      },
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "token"
+      ]
+    },
     "CreateameetingRequest": {
       "title": "CreateameetingRequest",
       "example": {
-        "name": "test meeting",
-        "description": "this is a thes meeting",
-        "address": "Buenavista 150, col. agricola oriental",
-        "date": "2020-02-23 21:33:53"
+        "name": "Test Meeting",
+        "description": "This is my first Test Meeting",
+        "date": "2020-02-23 21:33:53",
+        "location": {
+          "country": "Mexico",
+          "state": "Jalisco",
+          "city": "Guadalajara",
+          "street": "Buenavista",
+          "number": "35",
+          "reference": "Frente al Costo"
+        }
       },
       "type": "object",
       "properties": {
@@ -1216,33 +1313,86 @@
         "description": {
           "type": "string"
         },
-        "address": {
-          "type": "string"
-        },
         "date": {
           "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
         }
       },
       "required": [
         "name",
         "description",
-        "address",
-        "date"
+        "date",
+        "location"
       ]
     },
-    "Createameeting": {
-      "title": "Createameeting",
+    "Location": {
+      "title": "Location",
+      "example": {
+        "country": "Mexico",
+        "state": "Jalisco",
+        "city": "Guadalajara",
+        "street": "Buenavista",
+        "number": "35",
+        "reference": "Frente al Costo"
+      },
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "country",
+        "state",
+        "city",
+        "street",
+        "number",
+        "reference"
+      ]
+    },
+    "Createameeting2": {
+      "title": "Createameeting2",
       "example": {
         "meeting": {
-          "id": 6,
-          "name": "test meeting",
-          "description": "this is a thes meeting",
-          "address": "Buenavista 150, col. agricola oriental",
+          "id": 5,
+          "name": "Test Meeting 3",
+          "description": "This is my Test Meeting",
           "date": "2020-02-24T03:33:53Z",
-          "hostId": 2,
-          "updatedAt": "2020-02-24T03:54:08.382Z",
-          "createdAt": "2020-02-24T03:54:08.382Z",
-          "deletedAt": null
+          "createdAt": "2020-03-02T05:07:06.39Z",
+          "updatedAt": "2020-03-02T05:07:06.39Z",
+          "host": {
+            "id": 1,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true
+          },
+          "location": {
+            "country": "Denmark",
+            "state": "Copenhagen",
+            "city": "Copenhagen",
+            "street": "Den",
+            "number": "100",
+            "reference": null
+          }
         }
       },
       "type": "object",
@@ -1258,15 +1408,28 @@
     "Meeting": {
       "title": "Meeting",
       "example": {
-        "id": 6,
-        "name": "test meeting",
-        "description": "this is a thes meeting",
-        "address": "Buenavista 150, col. agricola oriental",
+        "id": 5,
+        "name": "Test Meeting 3",
+        "description": "This is my Test Meeting",
         "date": "2020-02-24T03:33:53Z",
-        "hostId": 2,
-        "updatedAt": "2020-02-24T03:54:08.382Z",
-        "createdAt": "2020-02-24T03:54:08.382Z",
-        "deletedAt": null
+        "createdAt": "2020-03-02T05:07:06.39Z",
+        "updatedAt": "2020-03-02T05:07:06.39Z",
+        "host": {
+          "id": 1,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "test@test.com",
+          "isAdmin": true
+        },
+        "location": {
+          "country": "Denmark",
+          "state": "Copenhagen",
+          "city": "Copenhagen",
+          "street": "Den",
+          "number": "100",
+          "reference": null
+        }
       },
       "type": "object",
       "properties": {
@@ -1280,150 +1443,185 @@
         "description": {
           "type": "string"
         },
-        "address": {
-          "type": "string"
-        },
         "date": {
-          "type": "string"
-        },
-        "hostId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "updatedAt": {
           "type": "string"
         },
         "createdAt": {
           "type": "string"
         },
-        "deletedAt": {
+        "updatedAt": {
           "type": "string"
+        },
+        "host": {
+          "$ref": "#/definitions/Host"
+        },
+        "location": {
+          "$ref": "#/definitions/Location1"
         }
       },
       "required": [
         "id",
         "name",
         "description",
-        "address",
         "date",
-        "hostId",
-        "updatedAt",
         "createdAt",
-        "deletedAt"
+        "updatedAt",
+        "host",
+        "location"
+      ]
+    },
+    "Host": {
+      "title": "Host",
+      "example": {
+        "id": 1,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "test@test.com",
+        "isAdmin": true
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "isAdmin"
+      ]
+    },
+    "Location1": {
+      "title": "Location1",
+      "example": {
+        "country": "Denmark",
+        "state": "Copenhagen",
+        "city": "Copenhagen",
+        "street": "Den",
+        "number": "100",
+        "reference": null
+      },
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "country",
+        "state",
+        "city",
+        "street",
+        "number",
+        "reference"
       ]
     },
     "Listmeetings": {
       "title": "Listmeetings",
       "example": {
-        "total": 6,
+        "total": 3,
         "steps": 1,
         "meetings": [
           {
-            "id": 1,
-            "name": "test meeting",
-            "description": "this is a thes meeting",
-            "address": "Buenavista 150, col. agricola oriental",
-            "date": "2020-02-24T03:33:53Z",
-            "hostId": 2,
-            "participants": [
-              {
-                "id": 31,
-                "firstName": "Glen",
-                "lastName": "Benini",
-                "username": "jarren",
-                "email": "metserdin@meetup.com"
-              },
-              {
-                "id": 32,
-                "firstName": "Cory",
-                "lastName": "Iqbal",
-                "username": "awilofuki",
-                "email": "uppal@meetup.com"
-              },
-              {
-                "id": 33,
-                "firstName": "Jeanette",
-                "lastName": "Puccini",
-                "username": "kob",
-                "email": "vuwvaci@meetup.com"
-              }
-            ]
-          },
-          {
             "id": 2,
-            "name": "test meeting",
-            "description": "this is a thes meeting",
-            "address": "Buenavista 150, col. agricola oriental",
+            "name": "Test Meeting 2",
+            "description": "This is my second Test Meeting",
             "date": "2020-02-24T03:33:53Z",
-            "hostId": 2,
-            "participants": [
-              {
-                "id": 34,
-                "firstName": "Lola",
-                "lastName": "Hill",
-                "username": "nil",
-                "email": "ubufuik@meetup.com"
-              }
-            ]
+            "hostId": 1,
+            "host": {
+              "id": 1,
+              "firstName": "test",
+              "lastName": "test",
+              "username": "test",
+              "email": "test@test.com"
+            },
+            "location": {
+              "country": "Mexico",
+              "state": "Jalisco",
+              "city": "Guadalajara",
+              "street": "Buenavista",
+              "number": "35",
+              "reference": "Frente al Costo"
+            }
           },
           {
-            "id": 3,
-            "name": "test meeting",
-            "description": "this is a thes meeting",
-            "address": "Buenavista 150, col. agricola oriental",
+            "id": 1,
+            "name": "Test Meeting",
+            "description": "This is my first Test Meeting",
             "date": "2020-02-24T03:33:53Z",
-            "hostId": 2,
-            "participants": []
-          },
-          {
-            "id": 4,
-            "name": "test meeting",
-            "description": "this is a thes meeting",
-            "address": "Buenavista 150, col. agricola oriental",
-            "date": "2020-02-24T03:33:53Z",
-            "hostId": 2,
-            "participants": []
+            "hostId": 1,
+            "host": {
+              "id": 1,
+              "firstName": "test",
+              "lastName": "test",
+              "username": "test",
+              "email": "test@test.com"
+            },
+            "location": {
+              "country": "Mexico",
+              "state": "Jalisco",
+              "city": "Guadalajara",
+              "street": "Buenavista",
+              "number": "35",
+              "reference": "Frente al Costo"
+            }
           },
           {
             "id": 5,
-            "name": "test updated meeting",
-            "description": "this is a thes updated meeting",
-            "address": "Buenavista 150, col. agricola oriental",
-            "date": "2020-03-24T03:33:53Z",
-            "hostId": 2,
-            "participants": [
-              {
-                "id": 30,
-                "firstName": "Adeline",
-                "lastName": "Obrien",
-                "username": "deof",
-                "email": "fa@meetup.com"
-              }
-            ]
-          },
-          {
-            "id": 6,
-            "name": "test meeting",
-            "description": "this is a thes meeting",
-            "address": "Buenavista 150, col. agricola oriental",
+            "name": "Test Meeting 3",
+            "description": "This is my Test Meeting",
             "date": "2020-02-24T03:33:53Z",
-            "hostId": 2,
-            "participants": [
-              {
-                "id": 20,
-                "firstName": "Alejandro",
-                "lastName": "Tucker",
-                "username": "oboeduki",
-                "email": "wacsatop@meetup.com"
-              },
-              {
-                "id": 21,
-                "firstName": "Daisy",
-                "lastName": "Cianchi",
-                "username": "ta",
-                "email": "gutiz@meetup.com"
-              }
-            ]
+            "hostId": 1,
+            "host": {
+              "id": 1,
+              "firstName": "test",
+              "lastName": "test",
+              "username": "test",
+              "email": "test@test.com"
+            },
+            "location": {
+              "country": "Denmark",
+              "state": "Copenhagen",
+              "city": "Copenhagen",
+              "street": "Den",
+              "number": "100",
+              "reference": null
+            }
           }
         ]
       },
@@ -1453,35 +1651,26 @@
     "Meeting1": {
       "title": "Meeting1",
       "example": {
-        "id": 1,
-        "name": "test meeting",
-        "description": "this is a thes meeting",
-        "address": "Buenavista 150, col. agricola oriental",
+        "id": 2,
+        "name": "Test Meeting 2",
+        "description": "This is my second Test Meeting",
         "date": "2020-02-24T03:33:53Z",
-        "hostId": 2,
-        "participants": [
-          {
-            "id": 31,
-            "firstName": "Glen",
-            "lastName": "Benini",
-            "username": "jarren",
-            "email": "metserdin@meetup.com"
-          },
-          {
-            "id": 32,
-            "firstName": "Cory",
-            "lastName": "Iqbal",
-            "username": "awilofuki",
-            "email": "uppal@meetup.com"
-          },
-          {
-            "id": 33,
-            "firstName": "Jeanette",
-            "lastName": "Puccini",
-            "username": "kob",
-            "email": "vuwvaci@meetup.com"
-          }
-        ]
+        "hostId": 1,
+        "host": {
+          "id": 1,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "test@test.com"
+        },
+        "location": {
+          "country": "Mexico",
+          "state": "Jalisco",
+          "city": "Guadalajara",
+          "street": "Buenavista",
+          "number": "35",
+          "reference": "Frente al Costo"
+        }
       },
       "type": "object",
       "properties": {
@@ -1495,9 +1684,6 @@
         "description": {
           "type": "string"
         },
-        "address": {
-          "type": "string"
-        },
         "date": {
           "type": "string"
         },
@@ -1505,31 +1691,31 @@
           "type": "integer",
           "format": "int32"
         },
-        "participants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Participant"
-          }
+        "host": {
+          "$ref": "#/definitions/Host1"
+        },
+        "location": {
+          "$ref": "#/definitions/Location1"
         }
       },
       "required": [
         "id",
         "name",
         "description",
-        "address",
         "date",
         "hostId",
-        "participants"
+        "host",
+        "location"
       ]
     },
-    "Participant": {
-      "title": "Participant",
+    "Host1": {
+      "title": "Host1",
       "example": {
-        "id": 31,
-        "firstName": "Glen",
-        "lastName": "Benini",
-        "username": "jarren",
-        "email": "metserdin@meetup.com"
+        "id": 1,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "test@test.com"
       },
       "type": "object",
       "properties": {
@@ -1549,61 +1735,44 @@
         "email": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "username",
+        "email"
+      ]
     },
-    "detailameeting": {
-      "title": "detailameeting",
+    "Detailonemeeting": {
+      "title": "Detailonemeeting",
       "example": {
         "meeting": {
           "id": 1,
-          "name": "test meeting",
-          "description": "this is a thes meeting",
-          "address": "Buenavista 150, col. agricola oriental",
+          "name": "Test Meeting",
+          "description": "This is my first Test Meeting",
           "date": "2020-02-24T03:33:53Z",
-          "createdAt": "2020-02-24T03:48:44.984Z",
-          "updatedAt": "2020-02-24T03:48:44.984Z",
-          "participants": [
-            {
-              "id": 31,
-              "firstName": "Glen",
-              "lastName": "Benini",
-              "username": "jarren",
-              "email": "metserdin@meetup.com",
-              "isAdmin": false,
-              "createdAt": "2020-02-24T03:33:53.113Z",
-              "updatedAt": "2020-02-24T03:33:53.113Z"
-            },
-            {
-              "id": 32,
-              "firstName": "Cory",
-              "lastName": "Iqbal",
-              "username": "awilofuki",
-              "email": "uppal@meetup.com",
-              "isAdmin": true,
-              "createdAt": "2020-02-24T03:33:53.113Z",
-              "updatedAt": "2020-02-24T03:33:53.113Z"
-            },
-            {
-              "id": 33,
-              "firstName": "Jeanette",
-              "lastName": "Puccini",
-              "username": "kob",
-              "email": "vuwvaci@meetup.com",
-              "isAdmin": true,
-              "createdAt": "2020-02-24T03:33:53.113Z",
-              "updatedAt": "2020-02-24T03:33:53.113Z"
-            }
-          ],
+          "createdAt": "2020-03-02T04:59:47.765Z",
+          "updatedAt": "2020-03-02T04:59:47.765Z",
           "host": {
-            "id": 2,
-            "firstName": "Gavin",
-            "lastName": "Browne",
-            "username": "hegkazco",
-            "email": "jodoj@meetup.com",
-            "isAdmin": false,
-            "createdAt": "2020-02-24T03:33:53.113Z",
-            "updatedAt": "2020-02-24T03:33:53.113Z"
-          }
+            "id": 1,
+            "firstName": "test",
+            "lastName": "test",
+            "username": "test",
+            "email": "test@test.com",
+            "isAdmin": true,
+            "createdAt": "2020-03-02T04:54:35.98Z",
+            "updatedAt": "2020-03-02T04:54:35.98Z"
+          },
+          "location": {
+            "country": "Mexico",
+            "state": "Jalisco",
+            "city": "Guadalajara",
+            "street": "Buenavista",
+            "number": "35",
+            "reference": "Frente al Costo"
+          },
+          "participants": []
         }
       },
       "type": "object",
@@ -1620,54 +1789,30 @@
       "title": "Meeting2",
       "example": {
         "id": 1,
-        "name": "test meeting",
-        "description": "this is a thes meeting",
-        "address": "Buenavista 150, col. agricola oriental",
+        "name": "Test Meeting",
+        "description": "This is my first Test Meeting",
         "date": "2020-02-24T03:33:53Z",
-        "createdAt": "2020-02-24T03:48:44.984Z",
-        "updatedAt": "2020-02-24T03:48:44.984Z",
-        "participants": [
-          {
-            "id": 31,
-            "firstName": "Glen",
-            "lastName": "Benini",
-            "username": "jarren",
-            "email": "metserdin@meetup.com",
-            "isAdmin": false,
-            "createdAt": "2020-02-24T03:33:53.113Z",
-            "updatedAt": "2020-02-24T03:33:53.113Z"
-          },
-          {
-            "id": 32,
-            "firstName": "Cory",
-            "lastName": "Iqbal",
-            "username": "awilofuki",
-            "email": "uppal@meetup.com",
-            "isAdmin": true,
-            "createdAt": "2020-02-24T03:33:53.113Z",
-            "updatedAt": "2020-02-24T03:33:53.113Z"
-          },
-          {
-            "id": 33,
-            "firstName": "Jeanette",
-            "lastName": "Puccini",
-            "username": "kob",
-            "email": "vuwvaci@meetup.com",
-            "isAdmin": true,
-            "createdAt": "2020-02-24T03:33:53.113Z",
-            "updatedAt": "2020-02-24T03:33:53.113Z"
-          }
-        ],
+        "createdAt": "2020-03-02T04:59:47.765Z",
+        "updatedAt": "2020-03-02T04:59:47.765Z",
         "host": {
-          "id": 2,
-          "firstName": "Gavin",
-          "lastName": "Browne",
-          "username": "hegkazco",
-          "email": "jodoj@meetup.com",
-          "isAdmin": false,
-          "createdAt": "2020-02-24T03:33:53.113Z",
-          "updatedAt": "2020-02-24T03:33:53.113Z"
-        }
+          "id": 1,
+          "firstName": "test",
+          "lastName": "test",
+          "username": "test",
+          "email": "test@test.com",
+          "isAdmin": true,
+          "createdAt": "2020-03-02T04:54:35.98Z",
+          "updatedAt": "2020-03-02T04:54:35.98Z"
+        },
+        "location": {
+          "country": "Mexico",
+          "state": "Jalisco",
+          "city": "Guadalajara",
+          "street": "Buenavista",
+          "number": "35",
+          "reference": "Frente al Costo"
+        },
+        "participants": []
       },
       "type": "object",
       "properties": {
@@ -1681,9 +1826,6 @@
         "description": {
           "type": "string"
         },
-        "address": {
-          "type": "string"
-        },
         "date": {
           "type": "string"
         },
@@ -1693,90 +1835,42 @@
         "updatedAt": {
           "type": "string"
         },
+        "host": {
+          "$ref": "#/definitions/Host2"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
         "participants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Participant1"
+            "type": "string"
           }
-        },
-        "host": {
-          "$ref": "#/definitions/Host"
         }
       },
       "required": [
         "id",
         "name",
         "description",
-        "address",
         "date",
         "createdAt",
         "updatedAt",
-        "participants",
-        "host"
+        "host",
+        "location",
+        "participants"
       ]
     },
-    "Participant1": {
-      "title": "Participant1",
+    "Host2": {
+      "title": "Host2",
       "example": {
-        "id": 31,
-        "firstName": "Glen",
-        "lastName": "Benini",
-        "username": "jarren",
-        "email": "metserdin@meetup.com",
-        "isAdmin": false,
-        "createdAt": "2020-02-24T03:33:53.113Z",
-        "updatedAt": "2020-02-24T03:33:53.113Z"
-      },
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "isAdmin": {
-          "type": "boolean"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "firstName",
-        "lastName",
-        "username",
-        "email",
-        "isAdmin",
-        "createdAt",
-        "updatedAt"
-      ]
-    },
-    "Host": {
-      "title": "Host",
-      "example": {
-        "id": 2,
-        "firstName": "Gavin",
-        "lastName": "Browne",
-        "username": "hegkazco",
-        "email": "jodoj@meetup.com",
-        "isAdmin": false,
-        "createdAt": "2020-02-24T03:33:53.113Z",
-        "updatedAt": "2020-02-24T03:33:53.113Z"
+        "id": 1,
+        "firstName": "test",
+        "lastName": "test",
+        "username": "test",
+        "email": "test@test.com",
+        "isAdmin": true,
+        "createdAt": "2020-03-02T04:54:35.98Z",
+        "updatedAt": "2020-03-02T04:54:35.98Z"
       },
       "type": "object",
       "properties": {
@@ -1820,45 +1914,88 @@
     "UpdateameetingRequest": {
       "title": "UpdateameetingRequest",
       "example": {
-        "name": "test updated meeting",
-        "description": "this is a thes updated meeting",
-        "address": "Buenavista 150, col. agricola oriental",
-        "date": "2020-03-23 21:33:53"
+        "name": "Test updated Meeting",
+        "date": "2020-03-10 21:33:53",
+        "location": {
+          "country": "Mexico",
+          "state": "Jalisco",
+          "city": "Guadalajara",
+          "street": "Buenavista",
+          "number": "1000"
+        }
       },
       "type": "object",
       "properties": {
         "name": {
           "type": "string"
         },
-        "description": {
-          "type": "string"
-        },
-        "address": {
-          "type": "string"
-        },
         "date": {
           "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/Location4"
         }
       },
       "required": [
         "name",
-        "description",
-        "address",
-        "date"
+        "date",
+        "location"
+      ]
+    },
+    "Location4": {
+      "title": "Location4",
+      "example": {
+        "country": "Mexico",
+        "state": "Jalisco",
+        "city": "Guadalajara",
+        "street": "Buenavista",
+        "number": "1000"
+      },
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "country",
+        "state",
+        "city",
+        "street",
+        "number"
       ]
     },
     "Updateameeting": {
       "title": "Updateameeting",
       "example": {
         "meeting": {
-          "id": 5,
-          "name": "test updated meeting",
-          "description": "this is a thes updated meeting",
-          "address": "Buenavista 150, col. agricola oriental",
-          "date": "2020-03-24T03:33:53Z",
-          "createdAt": "2020-02-24T03:52:47.623Z",
-          "updatedAt": "2020-02-24T04:54:47.609Z",
-          "hostId": 2
+          "id": 1,
+          "name": "Test updated Meeting",
+          "description": "This is my first Test Meeting",
+          "date": "2020-03-11T03:33:53Z",
+          "createdAt": "2020-03-02T04:59:47.765Z",
+          "updatedAt": "2020-03-02T05:14:22.429Z",
+          "hostId": 1,
+          "location": {
+            "country": "Mexico",
+            "state": "Jalisco",
+            "city": "Guadalajara",
+            "street": "Buenavista",
+            "number": "1000",
+            "reference": "Frente al Costo"
+          }
         }
       },
       "type": "object",
@@ -1874,14 +2011,21 @@
     "Meeting3": {
       "title": "Meeting3",
       "example": {
-        "id": 5,
-        "name": "test updated meeting",
-        "description": "this is a thes updated meeting",
-        "address": "Buenavista 150, col. agricola oriental",
-        "date": "2020-03-24T03:33:53Z",
-        "createdAt": "2020-02-24T03:52:47.623Z",
-        "updatedAt": "2020-02-24T04:54:47.609Z",
-        "hostId": 2
+        "id": 1,
+        "name": "Test updated Meeting",
+        "description": "This is my first Test Meeting",
+        "date": "2020-03-11T03:33:53Z",
+        "createdAt": "2020-03-02T04:59:47.765Z",
+        "updatedAt": "2020-03-02T05:14:22.429Z",
+        "hostId": 1,
+        "location": {
+          "country": "Mexico",
+          "state": "Jalisco",
+          "city": "Guadalajara",
+          "street": "Buenavista",
+          "number": "1000",
+          "reference": "Frente al Costo"
+        }
       },
       "type": "object",
       "properties": {
@@ -1893,9 +2037,6 @@
           "type": "string"
         },
         "description": {
-          "type": "string"
-        },
-        "address": {
           "type": "string"
         },
         "date": {
@@ -1910,17 +2051,20 @@
         "hostId": {
           "type": "integer",
           "format": "int32"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
         }
       },
       "required": [
         "id",
         "name",
         "description",
-        "address",
         "date",
         "createdAt",
         "updatedAt",
-        "hostId"
+        "hostId",
+        "location"
       ]
     },
     "CreateauserRequest": {
@@ -1930,7 +2074,6 @@
         "lastName": "test",
         "username": "test",
         "email": "test@test.com",
-        "isAdmin": true,
         "password": "test"
       },
       "type": "object",
@@ -1947,9 +2090,6 @@
         "email": {
           "type": "string"
         },
-        "isAdmin": {
-          "type": "boolean"
-        },
         "password": {
           "type": "string"
         }
@@ -1959,22 +2099,21 @@
         "lastName",
         "username",
         "email",
-        "isAdmin",
         "password"
       ]
     },
-    "Createauser": {
-      "title": "Createauser",
+    "Createanotadminuser": {
+      "title": "Createanotadminuser",
       "example": {
         "user": {
-          "id": 54,
+          "id": 2,
           "firstName": "test",
           "lastName": "test",
           "username": "test",
           "email": "test@test.com",
-          "isAdmin": true,
-          "updatedAt": "2020-02-24T06:35:42.099Z",
-          "createdAt": "2020-02-24T06:35:42.099Z"
+          "isAdmin": false,
+          "updatedAt": "2020-03-02T04:55:17.735Z",
+          "createdAt": "2020-03-02T04:55:17.735Z"
         }
       },
       "type": "object",
@@ -1990,14 +2129,14 @@
     "User": {
       "title": "User",
       "example": {
-        "id": 54,
+        "id": 2,
         "firstName": "test",
         "lastName": "test",
         "username": "test",
         "email": "test@test.com",
-        "isAdmin": true,
-        "updatedAt": "2020-02-24T06:35:42.099Z",
-        "createdAt": "2020-02-24T06:35:42.099Z"
+        "isAdmin": false,
+        "updatedAt": "2020-03-02T04:55:17.735Z",
+        "createdAt": "2020-03-02T04:55:17.735Z"
       },
       "type": "object",
       "properties": {
@@ -2324,7 +2463,7 @@
         "meetings": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Meeting3"
+            "$ref": "#/definitions/Meeting4"
           }
         },
         "hostess": {
@@ -2345,6 +2484,58 @@
         "updatedAt",
         "meetings",
         "hostess"
+      ]
+    },
+    "Meeting4": {
+      "title": "Meeting4",
+      "example": {
+        "id": 4,
+        "name": "test meeting",
+        "description": "this is a thes meeting",
+        "address": "Buenavista 150, col. agricola oriental",
+        "date": "2020-02-24T03:33:53Z",
+        "createdAt": "2020-02-24T03:52:42.78Z",
+        "updatedAt": "2020-02-24T03:52:42.78Z",
+        "hostId": 2
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "hostId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "address",
+        "date",
+        "createdAt",
+        "updatedAt",
+        "hostId"
       ]
     },
     "Hostess": {
@@ -2457,7 +2648,9 @@
       "title": "EnrolloneinmeetingsRequest",
       "example": {
         "meetingIds": [
-          4
+          1,
+          2,
+          3
         ]
       },
       "type": "object",
@@ -2638,7 +2831,7 @@
         "meetings": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Meeting3"
+            "$ref": "#/definitions/Meeting4"
           }
         },
         "hostess": {
@@ -2667,6 +2860,8 @@
       "title": "LeaveMeetingsRequest",
       "example": {
         "meetingIds": [
+          1,
+          2,
           3
         ]
       },
