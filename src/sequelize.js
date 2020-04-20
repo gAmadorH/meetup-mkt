@@ -15,6 +15,10 @@ async function pg(app, opts) {
   const { url, options } = opts.database
   let sequelize = null
 
+  if (options.logging) {
+    options.logging = (msg) => app.log.debug(msg)
+  }
+
   try {
     sequelize = new Sequelize(url, options)
 
