@@ -11,12 +11,12 @@ function onClose(app, done) {
   })
 }
 
-async function pg(app, options) {
-  const { url, params } = options.database
+async function pg(app, opts) {
+  const { url, options } = opts.database
   let sequelize = null
 
   try {
-    sequelize = new Sequelize(url, params)
+    sequelize = new Sequelize(url, options)
 
     await sequelize.authenticate()
   } catch (err) {

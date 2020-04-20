@@ -5,16 +5,50 @@ const Joi = require('joi')
 dotenv.config()
 
 const validationSchema = Joi.object({
-  NODE_ENV: Joi.string().required(),
-  HOST: Joi.string().ip().required(),
-  PORT: Joi.number().port().required(),
-  JWT_SECRET: Joi.string().token().required(),
-  DATABASE_NAME: Joi.string().required(),
-  DATABASE_USER: Joi.string().required(),
-  DATABASE_PASSWORD: Joi.string().required(),
-  DATABASE_HOST: Joi.string().ip().required(),
-  DATABASE_PORT: Joi.number().port().required(),
-  DATABASE_DIALECT: Joi.string().required()
+  // environment
+  NODE_ENV: Joi
+    .string()
+    .valid(['development', 'production'])
+    .required(),
+
+  // hosting
+  HOST: Joi
+    .alternatives(
+      Joi.string().ip(),
+      Joi.string().hostname()
+    )
+    .required(),
+  PORT: Joi
+    .number()
+    .port()
+    .required(),
+
+  // jwt secret
+  JWT_SECRET: Joi
+    .string()
+    .token()
+    .required(),
+
+  // database config
+  DB_NAME: Joi
+    .string()
+    .required(),
+  DB_USER: Joi
+    .string()
+    .required(),
+  DB_PASSWORD: Joi
+    .string()
+    .required(),
+  DB_HOST: Joi
+    .alternatives(
+      Joi.string().ip(),
+      Joi.string().hostname()
+    )
+    .required(),
+  DB_PORT: Joi
+    .number()
+    .port()
+    .required()
 })
 
 const validationOptions = {
@@ -25,18 +59,21 @@ const validationOptions = {
 const { error, value } = Joi.validate(process.env, validationSchema, validationOptions)
 
 if (error) {
-  /* eslint-disable no-console */
+  // eslint-disable-next-line no-console
   console.error('Config validation error:')
   throw error
 }
 
 // generate a database url
-const dbUser = value.DATABASE_USER
-const dbPassword = value.DATABASE_PASSWORD
-const dbHost = value.DATABASE_HOST
-const dbPort = value.DATABASE_PORT
-const dbName = value.DATABASE_NAME
-const dbUrl = `postgres://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_PORT,
+  DB_NAME
+} = value
+
+const dbUrl = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
 
 module.exports = {
   // environment
@@ -52,8 +89,7 @@ module.exports = {
   // database config
   database: {
     url: dbUrl,
-    params: {
-      dialect: value.DATABASE_DIALECT,
+    options: {
       logging: null
     }
   },

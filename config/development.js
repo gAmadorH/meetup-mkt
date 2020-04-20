@@ -1,7 +1,7 @@
 module.exports = {
   // database config
   database: {
-    params: {
+    options: {
       logging: true
     }
   },
