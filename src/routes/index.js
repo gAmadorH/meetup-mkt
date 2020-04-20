@@ -2,7 +2,7 @@ const authRoutes = require('./auth')
 const meetingRoutes = require('./meeting')
 const userRoutes = require('./user')
 
-function routes(app, _options, done) {
+function routes(app, _opts, done) {
   app.register(authRoutes, { prefix: '/auth' })
   app.register(meetingRoutes, { prefix: '/meetings' })
   app.register(userRoutes, { prefix: '/users' })

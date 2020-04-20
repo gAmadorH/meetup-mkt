@@ -13,7 +13,7 @@ function auth(request, _reply, done) {
   })
 }
 
-function pg(app, _options, done) {
+function pg(app, _opts, done) {
   app.decorate('auth', auth)
 
   app.log.info('AUTH\t\t\t[%s]', app.chalk.magenta('ready'))

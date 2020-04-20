@@ -2,7 +2,7 @@ const fs = require('fs')
 const fp = require('fastify-plugin')
 const path = require('path')
 
-function pg(fastify, _options, done) {
+function pg(app, _opts, done) {
   const db = {}
 
   try {
@@ -10,28 +10,30 @@ function pg(fastify, _options, done) {
 
     fs.readdirSync(pathModels).forEach((file) => {
       const pathFile = path.join(pathModels, file)
-      const model = fastify.sequelize.import(pathFile)
+      const model = app.sequelize.import(pathFile)
 
       db[model.name] = model
 
-      fastify.log.debug('%s\t\t%s', 'import', model.name)
+      app.log.debug('%s\t\t%s', 'import', model.name)
     })
   } catch (err) {
-    fastify.log.error('MODELS\t\t[%s]', fastify.chalk.red('error'))
+    app.log.error('MODELS\t\t[%s]', app.chalk.red('error'))
     done(err)
   }
 
   Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) db[modelName].associate(db)
+    if (db[modelName].associate) {
+      db[modelName].associate(db)
+    }
   })
 
-  fastify.log.info('MODELS\t\t[%s]', fastify.chalk.magenta('loaded'))
+  app.log.info('MODELS\t\t[%s]', app.chalk.magenta('loaded'))
   done()
 }
 
 module.exports = fp(pg, {
   fastify: '>=0.13.1',
   decorators: {
-    fastify: ['chalk']
+    fastify: ['chalk', 'sequelize']
   }
 })
