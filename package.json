@@ -38,7 +38,7 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
-    "bcrypt": "^4.0.0",
+    "bcrypt": "^5.0.0",
     "chance": "^1.1.4",
     "config": "^3.2.5",
     "dotenv": "^8.2.0",
